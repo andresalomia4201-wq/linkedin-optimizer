@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinkedIn Optimizer – Fabio Andrés Alomia</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #EEF3F8; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; }
+    ::-webkit-scrollbar { height: 4px; width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #C0CDD8; border-radius: 4px; }
+    textarea:focus { border-color: #0A66C2 !important; box-shadow: 0 0 0 2px rgba(10,102,194,0.15); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { animation: spin 0.9s linear infinite; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+const { useState, useCallback } = React;
+
+const PROFILE = {
+  name: "Fabio Andrés Alomia Ruiz",
+  university: "Universidad Autónoma de Occidente",
+  major: "Mercadeo y Negocios Internacionales",
+  currentRole: "Intern Marketing Consumer LAM @ Tesa Tape",
+};
+
+const SECTIONS = {
+  headline: {
+    title: "Titular (Headline)",
+    note: "Es lo primero que ven reclutadores. Máximo 220 caracteres. Incluye palabras clave que usan al buscar en LinkedIn.",
+    content: `Estudiante de Mercadeo & Negocios Internacionales | Intern Marketing Consumer LAM @ Tesa Tape | Trade Marketing · Digital · Consumer Goods | Abierto a nuevas oportunidades 🇨🇴`,
+    why: [
+      "Menciona Tesa Tape → credibilidad corporativa inmediata",
+      "Keywords que buscan recruiters: 'Trade Marketing', 'Consumer LAM', 'Digital'",
+      "'Abierto a nuevas oportunidades' → atrae reclutadores sin sonar desesperado",
+      "Bandera 🇨🇴 → señala foco en mercado latinoamericano",
+    ],
+  },
+  about: {
+    title: "Sección Sobre mí (About)",
+    note: "Los primeros 3 renglones son los únicos visibles sin hacer clic en 'ver más'. Deben enganchar. Máx. 2.600 caracteres.",
+    content: `Soy estudiante de Mercadeo y Negocios Internacionales en la UAO, con experiencia real en marketing de consumo masivo, trade marketing y contenido digital en Colombia y Latinoamérica.
+
+🎯 Actualmente me desempeño como Intern de Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf Group), donde apoyo la ejecución de estrategias para la región LAM, coordino materiales POP y colaboro con los equipos de ventas, trade marketing y marketing regional.
+
+📱 Previamente gestioné la presencia digital de CooproCafés, creando contenido para redes sociales y blog corporativo que fortalecieron la visibilidad de la marca.
+
+💡 Soy ponente en espacios académicos (Exposemillero 2025 – Pontificia Universidad Javeriana Cali) y miembro activo del Semillero Mercadeo y el Mundo Digital (MMD) de la UAO.
+
+🌎 Me apasiona construir marcas con impacto real en el mercado latinoamericano, con foco en consumer goods, marketing digital y estrategia de trade.
+
+📩 Abierto a nuevas oportunidades. ¡Conectemos!`,
+  },
+  tesa: {
+    title: "Experiencia: Tesa Tape Colombia SAS",
+    note: "Empieza con contexto de la empresa. Usa bullets con emojis para facilitar el escaneo. Agrega métricas reales si las tienes.",
+    content: `Como Intern de Marketing Consumer LAM en Tesa Tape Colombia (división de Beiersdorf), apoyo la implementación de estrategias de marketing para el canal de consumo en la región Latinoamérica.
+
+🔹 Coordinación y seguimiento de envíos de material POP, muestras y dotación a asesores, KAMs, mercaderistas y personal de campo en múltiples países LAM.
+🔹 Colaboración transversal con equipos de ventas, trade marketing y marketing regional para asegurar la correcta ejecución de iniciativas y campañas.
+🔹 Apoyo en la planeación y ejecución logística de actividades en punto de venta, ferias, eventos corporativos y lanzamientos de nuevos productos.
+🔹 Gestión y seguimiento del presupuesto de Marketing, asegurando control y optimización de recursos.`,
+  },
+  cooprocafes: {
+    title: "Experiencia: CooproCafés",
+    note: "Aunque fue una experiencia corta, muestra habilidades digitales concretas valiosas para cualquier agencia o startup.",
+    content: `Gestioné la presencia digital de CooproCafés, cooperativa cafetera del Valle del Cauca, fortaleciendo su comunidad online y visibilidad de marca.
+
+🔹 Creación y programación de contenido estratégico para redes sociales (Instagram, Facebook) y blog corporativo.
+🔹 Desarrollo de piezas multimedia que comunicaban la propuesta de valor de la cooperativa y sus productos.
+🔹 Aplicación de estrategias de social media orgánico para aumentar alcance y atraer nuevos clientes.`,
+  },
+  skills: {
+    title: "Habilidades a agregar",
+    note: "LinkedIn permite hasta 50 habilidades. Las 5 primeras son las más visibles — ponlas estratégicamente. Pide validaciones (endorsements) a compañeros.",
+    skills: [
+      { name: "Marketing de Consumo", top: true },
+      { name: "Trade Marketing", top: true },
+      { name: "Marketing Digital", top: true },
+      { name: "Gestión de Redes Sociales", top: true },
+      { name: "Negocios Internacionales", top: true },
+      { name: "Creación de Contenido Digital", top: false },
+      { name: "Material POP / BTL", top: false },
+      { name: "Gestión de Presupuestos", top: false },
+      { name: "Microsoft Excel", top: false },
+      { name: "Canva", top: false },
+      { name: "Español (Nativo)", top: false },
+      { name: "Inglés (Intermedio)", top: false },
+      { name: "Trabajo en Equipo", top: false },
+      { name: "Orientación al Cliente", top: false },
+      { name: "Adaptabilidad", top: false },
+    ],
+  },
+};
+
+const TIPS = [
+  { icon: "📸", title: "Foto de perfil profesional", text: "Fondo claro o neutro, encuadre desde hombros, ropa formal o smart casual. Sonrisa natural. Perfiles con foto reciben 21× más visitas.", color: "#F0FDF4", border: "#BBF7D0", tc: "#166534" },
+  { icon: "🖼️", title: "Banner / Portada en Canva", text: "Diseña uno gratis en Canva (1584 × 396 px). Incluye tu nombre, carrera, UAO y algo visual de marketing/negocios. Es tu primera impresión visual.", color: "#EFF6FF", border: "#BFDBFE", tc: "#1D4ED8" },
+  { icon: "🔗", title: "URL personalizada", text: "Ve a 'Editar perfil público y URL' y cámbiala a: linkedin.com/in/fabioalomia. Más profesional en CV y firma de email.", color: "#FDF4FF", border: "#E9D5FF", tc: "#7E22CE" },
+  { icon: "🏆", title: "Sección Destacados (Featured)", text: "Agrega: tu certificado Digital Marketing UAO, foto/evidencia de Exposemillero 2025 y cualquier proyecto de clase notable. Es lo primero que ve el reclutador.", color: "#FFF7ED", border: "#FED7AA", tc: "#9A3412" },
+  { icon: "✍️", title: "Publica contenido 1-2x por semana", text: "Abre la pestaña 📰 Tendencias cada lunes y tendrás 3 borradores listos. Solo elige el que más conecte contigo, edita un detalle personal y publica.", color: "#F0F9FF", border: "#BAE6FD", tc: "#0369A1" },
+  { icon: "🤝", title: "Solicita recomendaciones", text: "Pide una recomendación escrita a tu supervisor en Tesa Tape y a alguien de CooproCafés. Son el equivalente de referencias en LinkedIn y muy valoradas.", color: "#FEF9C3", border: "#FDE68A", tc: "#92400E" },
+  { icon: "🎓", title: "Agrega el Semillero MMD como actividad", text: "El Semillero Mercadeo y el Mundo Digital aparece en 'Organizaciones' o 'Actividades extracurriculares'. Demuestra compromiso más allá del aula.", color: "#F0FDF4", border: "#BBF7D0", tc: "#166534" },
+];
+
+// ─── HELPERS ────────────────────────────────────────────
+function todayStr() {
+  return new Date().toLocaleDateString("es-CO", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
+}
+
+function CopyBtn({ text, id, copied, onCopy }) {
+  return (
+    <button onClick={() => onCopy(text, id)} style={{
+      background: copied === id ? "#057642" : "#0A66C2",
+      color:"white", border:"none", padding:"6px 16px", borderRadius:"6px",
+      cursor:"pointer", fontSize:"12px", fontWeight:"700",
+      transition:"background 0.2s", whiteSpace:"nowrap", flexShrink:0,
+    }}>
+      {copied === id ? "✓ Copiado" : "Copiar"}
+    </button>
+  );
+}
+
+function Note({ text }) {
+  return (
+    <div style={{
+      background:"#EEF3F8", borderLeft:"3px solid #0A66C2",
+      borderRadius:"0 8px 8px 0", padding:"9px 13px", marginBottom:"14px",
+      fontSize:"12.5px", color:"#1D4F8C", lineHeight:"1.5",
+    }}>💡 {text}</div>
+  );
+}
+
+function ContentBox({ text, copyId, copied, onCopy }) {
+  return (
+    <div>
+      <div style={{ display:"flex", justifyContent:"flex-end", marginBottom:"8px" }}>
+        <CopyBtn text={text} id={copyId} copied={copied} onCopy={onCopy} />
+      </div>
+      <pre style={{
+        margin:0, background:"#F7F9FC", border:"1px solid #E8ECF0",
+        borderRadius:"8px", padding:"14px 16px", fontSize:"13.5px",
+        color:"#1D2226", lineHeight:"1.75", whiteSpace:"pre-wrap",
+        wordBreak:"break-word", fontFamily:"inherit",
+      }}>{text}</pre>
+    </div>
+  );
+}
+
+function Card({ children, style={} }) {
+  return (
+    <div style={{
+      background:"white", borderRadius:"12px", border:"1px solid #E0E4E9",
+      padding:"20px", marginBottom:"14px",
+      boxShadow:"0 1px 4px rgba(0,0,0,0.05)", ...style,
+    }}>{children}</div>
+  );
+}
+
+// ─── TENDENCIAS TAB ──────────────────────────────────────
+function TendenciasTab({ copied, onCopy }) {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loadMsg, setLoadMsg] = useState("");
+
+  const LOAD_MSGS = [
+    "Buscando en la web tendencias de esta semana…",
+    "Analizando lo más relevante para el mercado LAM…",
+    "Preparando tus borradores de LinkedIn…",
+  ];
+
+  const fetchTrends = useCallback(async () => {
+    setLoading(true);
+    setData(null);
+    setError(null);
+    let msgIdx = 0;
+    setLoadMsg(LOAD_MSGS[0]);
+    const interval = setInterval(() => {
+      msgIdx = (msgIdx + 1) % LOAD_MSGS.length;
+      setLoadMsg(LOAD_MSGS[msgIdx]);
+    }, 3500);
+
+    try {
+      const today = new Date().toLocaleDateString("es-CO", { day:"numeric", month:"long", year:"numeric" });
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({
+          model:"claude-sonnet-4-20250514",
+          max_tokens:2000,
+          tools:[{ type:"web_search_20250305", name:"web_search" }],
+          messages:[{
+            role:"user",
+            content:`Hoy es ${today}. Busca en la web las 3 tendencias más relevantes de ESTA SEMANA en alguno de estos temas: marketing digital, consumer goods, TikTok marketing, trade marketing, campañas de marcas en Latinoamérica.
+
+Para cada tendencia genera un borrador de post de LinkedIn en español colombiano, tono profesional pero cercano, escrito en primera persona desde la perspectiva de Fabio Andrés: estudiante de Mercadeo en la UAO, Intern de Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf). El post debe conectar la tendencia con su experiencia o su campo de estudio.
+
+Devuelve ÚNICAMENTE un objeto JSON válido, sin markdown, sin texto adicional, con esta estructura exacta:
+{"semana":"descripción del período","tendencias":[{"titulo":"nombre corto","resumen":"una oración","relevancia_lam":"por qué importa en Colombia/LAM en una oración","post_linkedin":"texto completo 150-200 palabras con emojis y 4-5 hashtags al final"}]}`
+          }],
+        }),
+      });
+
+      const json = await res.json();
+      // Extract text from all content blocks
+      const rawText = (json.content || [])
+        .filter(b => b.type === "text")
+        .map(b => b.text)
+        .join("");
+
+      // Parse JSON — strip possible markdown fences
+      const cleaned = rawText.replace(/```json|```/g, "").trim();
+      const parsed = JSON.parse(cleaned);
+      setData(parsed);
+    } catch(e) {
+      setError("No se pudo obtener las tendencias. Verifica tu conexión e intenta de nuevo.");
+    } finally {
+      clearInterval(interval);
+      setLoading(false);
+    }
+  }, []);
+
+  return (
+    <div>
+      {/* Header card */}
+      <Card>
+        <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:12, flexWrap:"wrap" }}>
+          <div>
+            <h2 style={{ margin:"0 0 4px", fontSize:15, fontWeight:800, color:"#0A66C2" }}>
+              📰 Tendencias de la Semana
+            </h2>
+            <p style={{ margin:0, fontSize:13, color:"#5E7287", lineHeight:1.5 }}>
+              Busca en tiempo real las tendencias de marketing más relevantes y te da los posts listos para publicar.
+            </p>
+          </div>
+          <button
+            onClick={fetchTrends}
+            disabled={loading}
+            style={{
+              background: loading ? "#94A3B8" : "#0A66C2",
+              color:"white", border:"none", padding:"10px 20px",
+              borderRadius:"8px", cursor: loading ? "not-allowed" : "pointer",
+              fontSize:13, fontWeight:700, whiteSpace:"nowrap",
+              transition:"background 0.2s", flexShrink:0,
+            }}
+          >
+            {loading ? "Buscando…" : "🔍 Buscar tendencias"}
+          </button>
+        </div>
+
+        {/* Instructions */}
+        {!loading && !data && (
+          <div style={{
+            marginTop:16, background:"#F7F9FC", borderRadius:8,
+            border:"1px solid #E8ECF0", padding:"14px 16px",
+          }}>
+            <p style={{ margin:"0 0 10px", fontSize:12.5, fontWeight:700, color:"#3D4A58", textTransform:"uppercase", letterSpacing:"0.05em" }}>
+              Cómo usar esto cada semana
+            </p>
+            {[
+              ["📱","Pon una alarma recurrente los lunes a las 8am con el link de esta app"],
+              ["🔍","Abre la app y haz clic en 'Buscar tendencias'"],
+              ["✏️","Elige el post que más conecte contigo, agrega un detalle personal"],
+              ["🚀","Publica en LinkedIn — eso es todo"],
+            ].map(([icon, text], i) => (
+              <div key={i} style={{ display:"flex", gap:10, alignItems:"flex-start", marginBottom:i<3?8:0 }}>
+                <span style={{ fontSize:16, flexShrink:0 }}>{icon}</span>
+                <span style={{ fontSize:13, color:"#3D4A58", lineHeight:1.5 }}>{text}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </Card>
+
+      {/* Loading state */}
+      {loading && (
+        <Card>
+          <div style={{ display:"flex", flexDirection:"column", alignItems:"center", padding:"32px 0", gap:16 }}>
+            <div style={{
+              width:40, height:40, borderRadius:"50%",
+              border:"3px solid #EEF3F8", borderTopColor:"#0A66C2",
+            }} className="spinner" />
+            <p style={{ margin:0, color:"#5E7287", fontSize:13.5, textAlign:"center", lineHeight:1.6 }}>
+              {loadMsg}
+            </p>
+          </div>
+        </Card>
+      )}
+
+      {/* Error state */}
+      {error && (
+        <div style={{ background:"#FEF2F2", border:"1px solid #FECACA", borderRadius:12, padding:"14px 16px", marginBottom:14 }}>
+          <p style={{ margin:0, color:"#B91C1C", fontSize:13.5 }}>⚠️ {error}</p>
+        </div>
+      )}
+
+      {/* Results */}
+      {data && !loading && (
+        <>
+          <div style={{
+            display:"flex", alignItems:"center", justifyContent:"space-between",
+            marginBottom:4, padding:"0 2px",
+          }}>
+            <span style={{ fontSize:12, color:"#5E7287", fontWeight:600 }}>
+              {data.semana || "Esta semana"} · {data.tendencias?.length || 0} tendencias
+            </span>
+            <button onClick={fetchTrends} style={{
+              background:"transparent", border:"1px solid #D1D5DB",
+              borderRadius:6, padding:"4px 10px", cursor:"pointer",
+              fontSize:12, color:"#5E7287", fontWeight:600,
+            }}>↻ Actualizar</button>
+          </div>
+
+          {(data.tendencias || []).map((t, i) => (
+            <Card key={i} style={{ borderLeft:"3px solid #0A66C2" }}>
+              {/* Trend header */}
+              <div style={{ marginBottom:10 }}>
+                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4 }}>
+                  <span style={{
+                    background:"#0A66C2", color:"white", fontSize:11,
+                    fontWeight:700, padding:"2px 8px", borderRadius:20,
+                  }}>#{i+1}</span>
+                  <h3 style={{ margin:0, fontSize:14, fontWeight:800, color:"#1D2226" }}>{t.titulo}</h3>
+                </div>
+                <p style={{ margin:0, fontSize:13, color:"#5E7287", lineHeight:1.5 }}>{t.resumen}</p>
+              </div>
+
+              {/* LAM relevance */}
+              <div style={{
+                background:"#F0FDF4", border:"1px solid #BBF7D0",
+                borderRadius:8, padding:"8px 12px", marginBottom:12,
+              }}>
+                <span style={{ fontSize:12, fontWeight:700, color:"#166534" }}>🌎 Por qué importa en LAM: </span>
+                <span style={{ fontSize:12, color:"#166534" }}>{t.relevancia_lam}</span>
+              </div>
+
+              {/* LinkedIn post */}
+              <div>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+                  <span style={{ fontSize:12, fontWeight:700, color:"#5E7287", textTransform:"uppercase", letterSpacing:"0.05em" }}>
+                    Borrador para LinkedIn
+                  </span>
+                  <CopyBtn text={t.post_linkedin} id={`trend-${i}`} copied={copied} onCopy={onCopy} />
+                </div>
+                <pre style={{
+                  margin:0, background:"#F7F9FC", border:"1px solid #E8ECF0",
+                  borderRadius:8, padding:"14px 16px", fontSize:13,
+                  color:"#1D2226", lineHeight:1.75, whiteSpace:"pre-wrap",
+                  wordBreak:"break-word", fontFamily:"inherit",
+                }}>{t.post_linkedin}</pre>
+              </div>
+            </Card>
+          ))}
+        </>
+      )}
+    </div>
+  );
+}
+
+// ─── MAIN APP ────────────────────────────────────────────
+function App() {
+  const [activeTab, setActiveTab] = useState("headline");
+  const [copied, setCopied] = useState(null);
+  const [aiInput, setAiInput] = useState("");
+  const [aiOutput, setAiOutput] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+
+  const copy = (text, key) => {
+    navigator.clipboard.writeText(text);
+    setCopied(key);
+    setTimeout(() => setCopied(null), 2200);
+  };
+
+  const callAI = async () => {
+    if (!aiInput.trim()) return;
+    setAiLoading(true);
+    setAiOutput("");
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          model:"claude-sonnet-4-20250514",
+          max_tokens:1000,
+          messages:[{
+            role:"user",
+            content:`Eres experto en optimización de perfiles de LinkedIn para el mercado latinoamericano.
+Perfil: ${PROFILE.name}, estudiante de ${PROFILE.major} en ${PROFILE.university}.
+Situación actual: ${PROFILE.currentRole}, contrato de práctica extendido, abierto a nuevas oportunidades pero no en búsqueda activa.
+Sectores objetivo: multinacionales, startups digitales, agencias de marketing, consumer goods y retail.
+Idioma: español colombiano, tono profesional pero cercano.
+Solicitud: ${aiInput}
+Responde directo, sin introducción. Si generas texto para LinkedIn, entrégalo listo para copiar y pegar.`,
+          }],
+        }),
+      });
+      const data = await res.json();
+      setAiOutput(data.content?.[0]?.text || "Sin respuesta. Intenta de nuevo.");
+    } catch {
+      setAiOutput("Error de conexión. Por favor intenta de nuevo.");
+    }
+    setAiLoading(false);
+  };
+
+  const tabs = [
+    { id:"headline",    label:"🏷️ Titular"    },
+    { id:"about",       label:"💼 Sobre mí"   },
+    { id:"tesa",        label:"🏢 Tesa Tape"  },
+    { id:"cooprocafes", label:"☕ CooproCafés" },
+    { id:"skills",      label:"⚡ Habilidades" },
+    { id:"tips",        label:"💡 Tips"       },
+    { id:"tendencias",  label:"📰 Tendencias" },
+    { id:"ai",          label:"🤖 Refinar IA" },
+  ];
+
+  return (
+    <div style={{ fontFamily:"'Segoe UI',-apple-system,sans-serif", background:"#EEF3F8", minHeight:"100vh", paddingBottom:40 }}>
+
+      {/* Header */}
+      <div style={{
+        background:"linear-gradient(135deg,#0A66C2 0%,#0D8ECF 100%)",
+        padding:"28px 20px 22px", position:"relative", overflow:"hidden",
+      }}>
+        <div style={{ position:"absolute", top:-30, right:-30, width:140, height:140, background:"rgba(255,255,255,0.07)", borderRadius:"50%" }} />
+        <div style={{ position:"absolute", bottom:-20, left:"60%", width:90, height:90, background:"rgba(255,255,255,0.05)", borderRadius:"50%" }} />
+        <div style={{ position:"relative", maxWidth:680, margin:"0 auto" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+            <div style={{
+              width:48, height:48, background:"rgba(255,255,255,0.2)", borderRadius:10,
+              display:"flex", alignItems:"center", justifyContent:"center",
+              fontSize:22, fontWeight:900, color:"white", flexShrink:0,
+            }}>in</div>
+            <div>
+              <h1 style={{ margin:0, fontSize:19, fontWeight:800, color:"white", letterSpacing:"-0.02em" }}>
+                LinkedIn Optimizer
+              </h1>
+              <p style={{ margin:"3px 0 0", fontSize:13, color:"rgba(255,255,255,0.8)", fontWeight:500 }}>
+                Fabio Andrés Alomia · Mercadeo & Negocios Internacionales
+              </p>
+            </div>
+          </div>
+          <div style={{ display:"flex", gap:8, marginTop:18, flexWrap:"wrap" }}>
+            {["Titular ✓","Sobre mí ✓","Experiencia ✓","Habilidades ✓","Tendencias ✓"].map(p => (
+              <span key={p} style={{
+                background:"rgba(255,255,255,0.18)", color:"white", fontSize:11,
+                fontWeight:600, padding:"4px 10px", borderRadius:20, letterSpacing:"0.02em",
+              }}>{p}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth:680, margin:"0 auto", padding:"0 14px" }}>
+
+        {/* Tabs */}
+        <div style={{ display:"flex", gap:6, overflowX:"auto", padding:"16px 0 10px", scrollbarWidth:"none" }}>
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
+              padding:"7px 14px", borderRadius:20, border:"none", cursor:"pointer",
+              fontSize:12.5, fontWeight:700, whiteSpace:"nowrap", flexShrink:0,
+              background: activeTab===t.id ? "#0A66C2" : "white",
+              color: activeTab===t.id ? "white" : "#5E7287",
+              boxShadow: activeTab===t.id ? "0 2px 8px rgba(10,102,194,0.35)" : "0 1px 3px rgba(0,0,0,0.1)",
+              transition:"all 0.15s",
+            }}>{t.label}</button>
+          ))}
+        </div>
+
+        {/* Text sections */}
+        {["headline","about","tesa","cooprocafes"].includes(activeTab) && (
+          <>
+            <Card>
+              <h2 style={{ margin:"0 0 12px", fontSize:15, fontWeight:800, color:"#0A66C2", letterSpacing:"-0.01em" }}>
+                {SECTIONS[activeTab].title}
+              </h2>
+              <Note text={SECTIONS[activeTab].note} />
+              <ContentBox text={SECTIONS[activeTab].content} copyId={activeTab} copied={copied} onCopy={copy} />
+            </Card>
+            {activeTab==="headline" && (
+              <Card>
+                <h3 style={{ margin:"0 0 12px", fontSize:14, fontWeight:700, color:"#1D2226" }}>
+                  ¿Por qué este titular funciona?
+                </h3>
+                <ul style={{ margin:0, paddingLeft:18, color:"#3D4A58", fontSize:13.5, lineHeight:2 }}>
+                  {SECTIONS.headline.why.map((w,i)=><li key={i}>{w}</li>)}
+                </ul>
+              </Card>
+            )}
+            {activeTab==="tesa" && (
+              <div style={{ background:"#FFF7ED", border:"1px solid #FED7AA", borderRadius:12, padding:"14px 16px", fontSize:13, color:"#7C2D12", lineHeight:1.6 }}>
+                <strong>🎯 Pro tip:</strong> Si puedes agregar métricas reales (ej: "coordiné envíos a 5+ países LAM" o "asistí al lanzamiento de 2 productos"), agrégalas. Los números multiplican el impacto de cada bullet.
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Skills */}
+        {activeTab==="skills" && (
+          <Card>
+            <h2 style={{ margin:"0 0 12px", fontSize:15, fontWeight:800, color:"#0A66C2" }}>Habilidades a agregar</h2>
+            <Note text={SECTIONS.skills.note} />
+            <div style={{ marginBottom:14 }}>
+              <p style={{ margin:"0 0 8px", fontSize:12, fontWeight:700, color:"#0A66C2", textTransform:"uppercase", letterSpacing:"0.06em" }}>⭐ Top 5</p>
+              <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
+                {SECTIONS.skills.skills.filter(s=>s.top).map((s,i)=>(
+                  <span key={i} style={{ background:"#EFF6FF", border:"1px solid #BFDBFE", color:"#1D4ED8", padding:"5px 13px", borderRadius:20, fontSize:13, fontWeight:600 }}>{s.name}</span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p style={{ margin:"0 0 8px", fontSize:12, fontWeight:700, color:"#5E7287", textTransform:"uppercase", letterSpacing:"0.06em" }}>Adicionales</p>
+              <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
+                {SECTIONS.skills.skills.filter(s=>!s.top).map((s,i)=>(
+                  <span key={i} style={{ background:"#F7F9FC", border:"1px solid #E0E4E9", color:"#3D4A58", padding:"5px 13px", borderRadius:20, fontSize:13, fontWeight:500 }}>{s.name}</span>
+                ))}
+              </div>
+            </div>
+            <div style={{ marginTop:16 }}>
+              <CopyBtn text={SECTIONS.skills.skills.map(s=>s.name).join(", ")} id="skills-list" copied={copied} onCopy={copy} />
+            </div>
+          </Card>
+        )}
+
+        {/* Tips */}
+        {activeTab==="tips" && (
+          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+            {TIPS.map((tip,i)=>(
+              <div key={i} style={{ background:tip.color, border:`1px solid ${tip.border}`, borderRadius:12, padding:"14px 16px" }}>
+                <h3 style={{ margin:"0 0 6px", color:tip.tc, fontSize:14, fontWeight:700 }}>{tip.icon} {tip.title}</h3>
+                <p style={{ margin:0, color:"#374151", fontSize:13.5, lineHeight:1.65 }}>{tip.text}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Tendencias */}
+        {activeTab==="tendencias" && (
+          <TendenciasTab copied={copied} onCopy={copy} />
+        )}
+
+        {/* AI */}
+        {activeTab==="ai" && (
+          <Card>
+            <h2 style={{ margin:"0 0 6px", fontSize:15, fontWeight:800, color:"#0A66C2" }}>🤖 Refinar con IA</h2>
+            <p style={{ margin:"0 0 16px", color:"#5E7287", fontSize:13.5, lineHeight:1.5 }}>
+              Pídele a la IA que personalice cualquier sección, genere ideas de posts o responda dudas sobre tu perfil.
+            </p>
+            <div style={{ marginBottom:10 }}>
+              <p style={{ margin:"0 0 6px", fontSize:12, fontWeight:700, color:"#5E7287" }}>IDEAS:</p>
+              {[
+                "Dame 5 ideas de posts para LinkedIn sobre mi experiencia en Tesa Tape",
+                "Reescribe mi sección Sobre mí enfocándome más en marketing digital",
+                "¿Cómo puedo destacar el Exposemillero 2025 en mi perfil?",
+                "Genera un mensaje para conectar con un reclutador de P&G Colombia",
+              ].map((q,i)=>(
+                <button key={i} onClick={()=>setAiInput(q)} style={{
+                  display:"block", width:"100%", textAlign:"left",
+                  background:"#F7F9FC", border:"1px solid #E0E4E9", borderRadius:8,
+                  padding:"8px 12px", marginBottom:6, cursor:"pointer",
+                  fontSize:13, color:"#3D4A58", lineHeight:1.4,
+                }}>"{q}"</button>
+              ))}
+            </div>
+            <textarea
+              value={aiInput}
+              onChange={e=>setAiInput(e.target.value)}
+              placeholder="Escribe tu pregunta o lo que necesitas mejorar..."
+              rows={4}
+              style={{
+                width:"100%", padding:"12px", borderRadius:8,
+                border:"1.5px solid #D1D5DB", fontSize:13.5,
+                fontFamily:"inherit", resize:"vertical", outline:"none",
+                color:"#1D2226", boxSizing:"border-box", lineHeight:1.6,
+              }}
+            />
+            <button onClick={callAI} disabled={aiLoading || !aiInput.trim()} style={{
+              marginTop:10, width:"100%",
+              background: aiLoading || !aiInput.trim() ? "#94A3B8" : "#0A66C2",
+              color:"white", border:"none", padding:11, borderRadius:8,
+              cursor: aiLoading || !aiInput.trim() ? "not-allowed" : "pointer",
+              fontSize:14, fontWeight:700, transition:"background 0.2s",
+            }}>
+              {aiLoading ? "Generando..." : "✨ Generar con IA"}
+            </button>
+            {aiOutput && (
+              <div style={{ marginTop:16 }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+                  <span style={{ fontSize:13, fontWeight:700, color:"#0A66C2" }}>Respuesta:</span>
+                  <CopyBtn text={aiOutput} id="ai-out" copied={copied} onCopy={copy} />
+                </div>
+                <pre style={{
+                  margin:0, background:"#F0F7FF", border:"1px solid #BFDBFE",
+                  borderRadius:8, padding:"14px 16px", fontSize:13.5,
+                  color:"#1D2226", lineHeight:1.75, whiteSpace:"pre-wrap",
+                  wordBreak:"break-word", fontFamily:"inherit",
+                }}>{aiOutput}</pre>
+              </div>
+            )}
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
