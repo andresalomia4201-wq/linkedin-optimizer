@@ -90,14 +90,6 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
 .seg{padding:6px 14px;border-radius:8px;border:1.5px solid #E0E4E9;cursor:pointer;font-size:12px;font-weight:700;background:#fff;color:#5E7287;font-family:inherit;transition:all .15s;white-space:nowrap}
 .seg.active{border-color:#0A66C2;background:#EFF6FF;color:#0A66C2}
 .subsec{display:none}.subsec.active{display:block}
-.mode-toggle{display:flex;background:#F7F9FC;border:1px solid #E0E4E9;border-radius:10px;padding:3px;margin-bottom:14px;gap:3px}
-.mode-btn{flex:1;padding:7px;border-radius:8px;border:none;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;color:#5E7287;background:transparent;transition:all .15s}
-.mode-btn.active{background:#fff;color:#0A66C2;box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.gk-setup{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:12px 14px;margin-bottom:12px}
-.gk-setup strong{font-size:13px;color:#1D4ED8;display:block;margin-bottom:6px}
-.gk-setup p{font-size:12px;color:#1D4F8C;line-height:1.6;margin-bottom:10px}
-.gk-ok{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:7px 11px;font-size:12px;color:#166534;display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.gk-chg{background:transparent;border:none;color:#166534;font-size:12px;text-decoration:underline;cursor:pointer;font-family:inherit;margin-left:auto}
 .news-card{background:#fff;border-radius:10px;border:1px solid #E0E4E9;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .news-title{font-size:13px;font-weight:700;color:#1D2226;margin-bottom:5px;line-height:1.4}
 .news-snippet{font-size:12px;color:#5E7287;line-height:1.5;margin-bottom:10px}
@@ -301,35 +293,8 @@ Abierto a nuevas oportunidades. Conectemos.</pre>
 
     <!-- DISCOVER -->
     <div class="subsec active" id="sub-discover">
-      <div class="mode-toggle">
-        <button class="mode-btn active" id="mode-google" onclick="switchMode('google')">&#128269; Google Search</button>
-        <button class="mode-btn" id="mode-topics" onclick="switchMode('topics')">&#127919; Temas activos</button>
-      </div>
-
-      <!-- Google mode -->
-      <div id="disc-google">
-        <div id="gk-box"></div>
-        <div class="card" id="g-search-card" style="display:none">
-          <div class="sec-title" style="margin-bottom:4px">&#128269; Buscar posts reales en LinkedIn</div>
-          <p style="font-size:12.5px;color:#5E7287;margin-bottom:12px;line-height:1.5">Resultados reales de LinkedIn y fuentes de marketing de las &#250;ltimas 2 semanas.</p>
-          <div class="search-row">
-            <input class="search-input" id="g-query" value="marketing digital Colombia" placeholder="Ej: trade marketing Colombia&#8230;"/>
-            <button class="search-go" id="btn-gsearch" onclick="doGoogleSearch()">Buscar</button>
-          </div>
-          <div style="display:flex;gap:5px;flex-wrap:wrap">
-            <button class="feed-btn" onclick="setGQ(this,'trade marketing Colombia 2026')">trade marketing</button>
-            <button class="feed-btn" onclick="setGQ(this,'consumer goods LAM estrategia')">consumer goods</button>
-            <button class="feed-btn" onclick="setGQ(this,'marketing digital Colombia tendencias')">marketing digital</button>
-            <button class="feed-btn" onclick="setGQ(this,'marca personal LinkedIn Colombia')">marca personal</button>
-          </div>
-        </div>
-        <div id="g-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="g-msg">Buscando&#8230;</p></div></div></div>
-        <div id="g-err" style="display:none" class="errbox"></div>
-        <div id="g-res"></div>
-      </div>
-
-      <!-- Topics mode -->
-      <div id="disc-topics" style="display:none">
+      <!-- Topics (único modo) -->
+      <div id="disc-topics">
         <div id="kb-topics"></div>
         <div class="card">
           <div class="sec-title" style="margin-bottom:4px">&#127919; Temas activos esta semana</div>
@@ -424,8 +389,6 @@ Abierto a nuevas oportunidades. Conectemos.</pre>
 
 <script>
 // ─── CONFIG ────────────────────────────────────────────
-var GKEY = 'AIzaSyC87BLIvfdpd6KJ44Tor_xdtqjTVEJPG-0';
-var GCX  = '72664c4fbe6e24b3f';
 
 // ─── TABS ──────────────────────────────────────────────
 document.getElementById('tabscroll').addEventListener('click', function(e) {
@@ -448,13 +411,7 @@ function switchSeg(id, btn) {
   document.getElementById('sub-' + id).classList.add('active');
   renderKeys();
 }
-function switchMode(mode) {
-  document.getElementById('mode-google').classList.toggle('active', mode === 'google');
-  document.getElementById('mode-topics').classList.toggle('active', mode === 'topics');
-  document.getElementById('disc-google').style.display = mode === 'google' ? 'block' : 'none';
-  document.getElementById('disc-topics').style.display = mode === 'topics' ? 'block' : 'none';
-  if (mode === 'topics') renderKeys();
-}
+// Google Search removed — no billing available
 
 // ─── COPY ──────────────────────────────────────────────
 function cp(id, btn) {
@@ -471,17 +428,11 @@ function cpSkills(btn) {
   });
 }
 function setQ(btn) { document.getElementById('ai-in').value = btn.textContent.trim(); }
-function setGQ(btn, q) {
-  document.getElementById('g-query').value = q;
-  document.querySelectorAll('#g-search-card .feed-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-}
 
 // ─── API KEYS ──────────────────────────────────────────
 function gk()  { return localStorage.getItem('groq_k') || ''; }
 function sk(v) { localStorage.setItem('groq_k', v.trim()); }
-function gGK() { return localStorage.getItem('g_api_key') || GKEY; }
-function gCX() { return localStorage.getItem('g_cx') || GCX; }
+
 
 var GROQ_IDS = ['kb-tend','kb-ai','kb-comment','kb-repost','kb-topics','kb-follow'];
 
@@ -637,77 +588,6 @@ function cpPre(id, btn) {
     btn.textContent = '&#10003; Copiado'; btn.classList.add('ok');
     setTimeout(function(){ btn.textContent = 'Copiar'; btn.classList.remove('ok'); }, 2200);
   });
-}
-
-// ─── GOOGLE SEARCH ─────────────────────────────────────
-function doGoogleSearch() {
-  var query = document.getElementById('g-query').value.trim();
-  if (!query) return;
-  var btn = document.getElementById('btn-gsearch');
-  btn.disabled = true; btn.textContent = 'Buscando\u2026';
-  document.getElementById('g-load').style.display = 'block';
-  document.getElementById('g-err').style.display = 'none';
-  document.getElementById('g-res').innerHTML = '';
-  startLd('g-msg', ['Buscando en LinkedIn\u2026','Filtrando resultados\u2026']);
-  var url = 'https://www.googleapis.com/customsearch/v1?key=' + gGK() + '&cx=' + gCX() + '&q=' + encodeURIComponent(query) + '&num=8&dateRestrict=w2&lr=lang_es&gl=co';
-  fetch(url)
-    .then(function(r){ return r.json(); })
-    .then(function(d) {
-      stopLd();
-      document.getElementById('g-load').style.display = 'none';
-      btn.disabled = false; btn.textContent = 'Buscar';
-      if (d.error) {
-        var hints = {400:'Verifica el Search Engine ID.', 403:'Ve a Google Cloud Console \u2192 APIs \u2192 Habilita Custom Search API.', 429:'L\u00edmite de 100 b\u00fasquedas/d\u00eda alcanzado.'};
-        showErr('g-err', 'Error ' + d.error.code + ': ' + d.error.message + (hints[d.error.code] ? ' \u2014 ' + hints[d.error.code] : ''));
-        return;
-      }
-      if (!d.items || !d.items.length) { showErr('g-err', 'Sin resultados. Prueba con: "marketing Colombia", "trade marketing LAM".'); return; }
-      renderGResults(d.items, query);
-    })
-    .catch(function(e) {
-      stopLd();
-      document.getElementById('g-load').style.display = 'none';
-      btn.disabled = false; btn.textContent = 'Buscar';
-      showErr('g-err', 'No se pudo conectar: ' + e.message);
-    });
-}
-function renderGResults(items, query) {
-  var w = document.getElementById('g-res');
-  var h = '<div class="meta"><span class="meta-txt">' + items.length + ' resultados &middot; \u00faltimas 2 semanas</span><button class="rbtn" onclick="doGoogleSearch()">\u21bb Actualizar</button></div>';
-  items.forEach(function(item) {
-    var url2 = item.link || '';
-    var title = item.title || '';
-    var snippet = (item.snippet || '').replace(/\n/g,' ').trim();
-    var isLI = url2.indexOf('linkedin') >= 0;
-    var badge = isLI ? 'src-li' : 'src-web';
-    var srcName = isLI ? 'LinkedIn' : url2.replace(/https?:\/\/(www\.)?/,'').split('/')[0];
-    var content = esc(title + (snippet ? ' \u2014 ' + snippet : '')).replace(/'/g,'&#39;');
-    h += '<div class="news-card"><span class="src-badge ' + badge + '">' + esc(srcName) + '</span>';
-    h += '<div class="news-title">' + esc(title) + '</div>';
-    if (snippet) h += '<div class="news-snippet">' + esc(snippet.slice(0,200)) + (snippet.length > 200 ? '\u2026' : '') + '</div>';
-    h += '<div class="news-actions"><a class="rlink rlink-primary" href="' + esc(url2) + '" target="_blank" rel="noopener">Abrir \u2192</a>';
-    h += '<button class="rlink rlink-secondary" onclick="loadForComment(\'' + content + '\')">Comentar</button>';
-    h += '<button class="rlink rlink-secondary" onclick="loadForRepost(\'' + content + '\')">Repostear</button></div></div>';
-  });
-  w.innerHTML = h;
-}
-function loadForComment(c) {
-  var clean = c.replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
-  document.getElementById('post-in').value = clean;
-  document.querySelectorAll('.seg').forEach(function(x){x.classList.remove('active');});
-  document.querySelectorAll('.subsec').forEach(function(x){x.classList.remove('active');});
-  var b = document.querySelector('.seg-btns .seg:nth-child(3)');
-  if(b) b.classList.add('active');
-  document.getElementById('sub-comment').classList.add('active');
-}
-function loadForRepost(c) {
-  var clean = c.replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
-  document.getElementById('repost-in').value = clean;
-  document.querySelectorAll('.seg').forEach(function(x){x.classList.remove('active');});
-  document.querySelectorAll('.subsec').forEach(function(x){x.classList.remove('active');});
-  var b = document.querySelector('.seg-btns .seg:nth-child(4)');
-  if(b) b.classList.add('active');
-  document.getElementById('sub-repost').classList.add('active');
 }
 
 // ─── SMART TOPICS ──────────────────────────────────────
