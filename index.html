@@ -6,8 +6,7 @@
 <title>LinkedIn Optimizer – Fabio Andrés Alomia</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#EEF3F8;min-height:100vh;padding-bottom:48px}
-/* HEADER */
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#EEF3F8;min-height:100vh;padding-bottom:56px}
 .hdr{background:linear-gradient(135deg,#0A66C2,#0D8ECF);padding:24px 16px 20px;position:relative;overflow:hidden}
 .hdr::before{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;background:rgba(255,255,255,.07);border-radius:50%}
 .hdr-in{max-width:680px;margin:0 auto;position:relative}
@@ -17,25 +16,22 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;backgrou
 .hdr p{font-size:12px;color:rgba(255,255,255,.8);font-weight:500;margin-top:2px}
 .pills{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
 .pill{background:rgba(255,255,255,.18);color:#fff;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px}
-/* WRAP */
 .wrap{max-width:680px;margin:0 auto;padding:0 12px}
 /* TABS */
 .tabs-outer{display:flex;align-items:center;gap:4px;padding:12px 0 8px}
-.tab-arr{background:#fff;border:1px solid #E0E4E9;border-radius:50%;width:28px;height:28px;min-width:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:#5E7287;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:0;font-family:inherit;transition:all .15s;line-height:1}
+.tab-arr{background:#fff;border:1px solid #E0E4E9;border-radius:50%;width:28px;height:28px;min-width:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:#5E7287;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:0;font-family:inherit;transition:all .15s;line-height:1;flex-shrink:0}
 .tab-arr:hover{background:#EEF3F8;color:#0A66C2;border-color:#0A66C2}
 .tabs-scroll{display:flex;gap:5px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:2px 1px;flex:1}
 .tabs-scroll::-webkit-scrollbar{display:none}
 .tab{padding:6px 12px;border-radius:20px;border:none;cursor:pointer;font-size:11.5px;font-weight:700;white-space:nowrap;flex-shrink:0;background:#fff;color:#5E7287;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:all .15s;font-family:inherit}
 .tab.active{background:#0A66C2;color:#fff;box-shadow:0 2px 8px rgba(10,102,194,.3)}
-/* SECTION */
 .sec{display:none}.sec.active{display:block}
-/* CARD */
+/* CARDS */
 .card{background:#fff;border-radius:12px;border:1px solid #E0E4E9;padding:18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .sec-title{font-size:14px;font-weight:800;color:#0A66C2;letter-spacing:-.01em;margin-bottom:10px}
 .note{background:#EEF3F8;border-left:3px solid #0A66C2;border-radius:0 8px 8px 0;padding:8px 12px;margin-bottom:12px;font-size:12px;color:#1D4F8C;line-height:1.5}
 .copy-row{display:flex;justify-content:flex-end;margin-bottom:7px}
 pre.box{margin:0;background:#F7F9FC;border:1px solid #E8ECF0;border-radius:8px;padding:12px 14px;font-size:13px;color:#1D2226;line-height:1.75;white-space:pre-wrap;word-break:break-word;font-family:inherit}
-/* COPY BTN */
 .cbtn{background:#0A66C2;color:#fff;border:none;padding:5px 14px;border-radius:6px;cursor:pointer;font-size:11.5px;font-weight:700;transition:background .2s;white-space:nowrap;font-family:inherit}
 .cbtn.ok{background:#057642}
 /* SKILLS */
@@ -55,9 +51,8 @@ pre.box{margin:0;background:#F7F9FC;border:1px solid #E8ECF0;border-radius:8px;p
 .t6{background:#FEF9C3;border:1px solid #FDE68A}.t6 h3{color:#92400E}
 .t7{background:#F0FDF4;border:1px solid #BBF7D0}.t7 h3{color:#166534}
 .protip{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#7C2D12;line-height:1.6}
-/* WHY LIST */
 .wl{margin:0;padding-left:16px;color:#3D4A58;font-size:13px;line-height:2}
-/* TREND CARD */
+/* TENDENCIAS */
 .tcard{background:#fff;border-radius:12px;border:1px solid #E0E4E9;border-left:3px solid #0A66C2;padding:18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .tnum{background:#0A66C2;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-right:7px}
 .ttitle{font-size:13.5px;font-weight:800;color:#1D2226}
@@ -68,11 +63,10 @@ pre.box{margin:0;background:#F7F9FC;border:1px solid #E8ECF0;border-radius:8px;p
 .spin{width:36px;height:36px;border-radius:50%;border:3px solid #EEF3F8;border-top-color:#0A66C2;animation:sp .9s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .ldmsg{color:#5E7287;font-size:13px;text-align:center;line-height:1.5}
-/* ERROR */
 .errbox{background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#B91C1C;line-height:1.5}
-.dbg{background:#FFF3CD;border:1px solid #FFEAA7;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:11px;color:#856404;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:120px;overflow-y:auto}
+.dbg{background:#FFF3CD;border:1px solid #FFEAA7;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:11px;color:#856404;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:100px;overflow-y:auto}
 /* AI */
-.ai-idea{display:block;width:100%;text-align:left;background:#F7F9FC;border:1px solid #E0E4E9;border-radius:8px;padding:7px 11px;margin-bottom:5px;cursor:pointer;font-size:12.5px;color:#3D4A58;line-height:1.4;font-family:inherit}
+.ai-idea{display:block;width:100%;text-align:left;background:#F7F9FC;border:1px solid #E0E4E9;border-radius:8px;padding:7px 11px;margin-bottom:5px;cursor:pointer;font-size:12.5px;color:#3D4A58;line-height:1.4;font-family:inherit;transition:all .12s}
 .ai-idea:hover{background:#EEF3F8;border-color:#0A66C2}
 textarea{width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid #D1D5DB;font-size:13px;font-family:inherit;resize:vertical;outline:none;color:#1D2226;box-sizing:border-box;line-height:1.6}
 textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
@@ -80,11 +74,10 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
 .bigbtn:disabled{background:#94A3B8;cursor:not-allowed}
 .out-hdr{display:flex;justify-content:space-between;align-items:center;margin:14px 0 7px}
 .ai-out{background:#F0F7FF;border:1px solid #BFDBFE;border-radius:8px;padding:12px 14px;font-size:13px;color:#1D2226;line-height:1.75;white-space:pre-wrap;word-break:break-word;font-family:inherit}
-/* META ROW */
-.meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;padding:0 1px}
+.meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;padding:0 1px}
 .meta-txt{font-size:11.5px;color:#5E7287;font-weight:600}
 .rbtn{background:transparent;border:1px solid #D1D5DB;border-radius:6px;padding:3px 9px;cursor:pointer;font-size:11.5px;color:#5E7287;font-weight:600;font-family:inherit}
-/* KEY SETUP */
+/* API KEY */
 .kbanner{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px 14px;margin-bottom:12px}
 .kbanner strong{font-size:13px;color:#7C2D12;display:block;margin-bottom:6px}
 .kbanner p{font-size:12px;color:#7C2D12;line-height:1.6;margin-bottom:10px}
@@ -101,10 +94,20 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
 .hrow:last-child{margin-bottom:0}
 .hrow span:first-child{font-size:15px;flex-shrink:0}
 .hrow span:last-child{font-size:12.5px;color:#3D4A58;line-height:1.5}
-/* TREND HEADER */
 .thdr{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .sbtn{background:#0A66C2;color:#fff;border:none;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:700;white-space:nowrap;font-family:inherit;flex-shrink:0;transition:background .2s}
 .sbtn:disabled{background:#94A3B8;cursor:not-allowed}
+/* LINKEDIN TAB */
+.li-card{background:#fff;border-radius:12px;border:1px solid #E0E4E9;padding:18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.li-topic{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#F7F9FC;border:1px solid #E8ECF0;border-radius:8px;margin-bottom:8px;flex-wrap:wrap}
+.li-topic-name{font-size:13px;font-weight:600;color:#1D2226;flex:1}
+.li-link{background:#0A66C2;color:#fff;border:none;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:11.5px;font-weight:700;font-family:inherit;white-space:nowrap;text-decoration:none;display:inline-block}
+.li-link:hover{background:#004182}
+.seg-btns{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.seg{padding:6px 14px;border-radius:8px;border:1.5px solid #E0E4E9;cursor:pointer;font-size:12px;font-weight:700;background:#fff;color:#5E7287;font-family:inherit;transition:all .15s}
+.seg.active{border-color:#0A66C2;background:#EFF6FF;color:#0A66C2}
+.subsec{display:none}.subsec.active{display:block}
+.badge{display:inline-block;background:#EFF6FF;color:#0A66C2;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid #BFDBFE;margin-left:6px}
 </style>
 </head>
 <body>
@@ -121,13 +124,12 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
     <div class="pills">
       <span class="pill">Titular ✓</span><span class="pill">Sobre mí ✓</span>
       <span class="pill">Experiencia ✓</span><span class="pill">Habilidades ✓</span>
-      <span class="pill">Tendencias ✓</span>
+      <span class="pill">Tendencias ✓</span><span class="pill">LinkedIn ✓</span>
     </div>
   </div>
 </div>
 
 <div class="wrap">
-  <!-- TABS -->
   <div class="tabs-outer">
     <button class="tab-arr" onclick="scrollT(-1)">&#8249;</button>
     <div class="tabs-scroll" id="tabscroll">
@@ -138,6 +140,7 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
       <button class="tab" data-t="skills">⚡ Habilidades</button>
       <button class="tab" data-t="tips">💡 Tips</button>
       <button class="tab" data-t="tendencias">📰 Tendencias</button>
+      <button class="tab" data-t="linkedin">🔗 LinkedIn</button>
       <button class="tab" data-t="ai">🤖 Refinar IA</button>
     </div>
     <button class="tab-arr" onclick="scrollT(1)">&#8250;</button>
@@ -170,15 +173,15 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
       <div class="copy-row"><button class="cbtn" onclick="cp('tx-ab',this)">Copiar</button></div>
       <pre class="box" id="tx-ab">Soy estudiante de Mercadeo y Negocios Internacionales en la UAO, con experiencia real en marketing de consumo masivo, trade marketing y contenido digital en Colombia y Latinoamérica.
 
-🎯 Actualmente me desempeño como Intern de Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf Group), donde apoyo la ejecución de estrategias para la región LAM, coordino materiales POP y colaboro con los equipos de ventas, trade marketing y marketing regional.
+Actualmente me desempeño como Intern de Marketing Consumer LAM en Tesa Tape Colombia, donde apoyo la ejecución de estrategias para la región, coordino materiales POP y colaboro con los equipos de ventas, trade marketing y marketing regional.
 
-📱 Previamente gestioné la presencia digital de CooproCafés, creando contenido para redes sociales y blog corporativo que fortalecieron la visibilidad de la marca.
+Previamente gestioné la presencia digital de CooproCafés, creando contenido para redes sociales y blog corporativo que fortaleció la visibilidad de la marca.
 
-💡 Soy ponente en espacios académicos (Exposemillero 2025 – Pontificia Universidad Javeriana Cali) y miembro activo del Semillero Mercadeo y el Mundo Digital (MMD) de la UAO.
+Soy ponente en espacios académicos (Exposemillero 2025 – Pontificia Universidad Javeriana Cali) y miembro activo del Semillero Mercadeo y el Mundo Digital (MMD) de la UAO.
 
-🌎 Me apasiona construir marcas con impacto real en el mercado latinoamericano, con foco en consumer goods, marketing digital y estrategia de trade.
+Me interesa construir marcas con impacto real en el mercado latinoamericano, con foco en consumer goods, marketing digital y estrategia de trade.
 
-📩 Abierto a nuevas oportunidades. ¡Conectemos!</pre>
+Abierto a nuevas oportunidades. Conectemos.</pre>
     </div>
   </div>
 
@@ -188,7 +191,7 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
       <div class="sec-title">Experiencia: Tesa Tape Colombia SAS</div>
       <div class="note">💡 Empieza con contexto de la empresa. Usa bullets con emojis. Agrega métricas reales si las tienes.</div>
       <div class="copy-row"><button class="cbtn" onclick="cp('tx-ts',this)">Copiar</button></div>
-      <pre class="box" id="tx-ts">Como Intern de Marketing Consumer LAM en Tesa Tape Colombia (división de Beiersdorf), apoyo la implementación de estrategias de marketing para el canal de consumo en la región Latinoamérica.
+      <pre class="box" id="tx-ts">Como Intern de Marketing Consumer LAM en Tesa Tape Colombia, apoyo la implementación de estrategias de marketing para el canal de consumo en la región Latinoamérica.
 
 🔹 Coordinación y seguimiento de envíos de material POP, muestras y dotación a asesores, KAMs, mercaderistas y personal de campo en múltiples países LAM.
 🔹 Colaboración transversal con equipos de ventas, trade marketing y marketing regional para asegurar la correcta ejecución de iniciativas y campañas.
@@ -240,9 +243,9 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
     <div class="tip t1"><h3>📸 Foto de perfil profesional</h3><p>Fondo claro o neutro, encuadre desde hombros, ropa smart casual. Perfiles con foto reciben 21× más visitas.</p></div>
     <div class="tip t2"><h3>🖼️ Banner en Canva</h3><p>Diseña uno gratis (1584 × 396 px). Incluye tu nombre, carrera, UAO y algo visual de marketing.</p></div>
     <div class="tip t3"><h3>🔗 URL personalizada</h3><p>Cámbiala a linkedin.com/in/fabioalomia — más profesional en CV y firma de email.</p></div>
-    <div class="tip t4"><h3>🏆 Sección Destacados (Featured)</h3><p>Agrega certificado Digital Marketing UAO y foto del Exposemillero 2025. Es lo primero que ve el reclutador.</p></div>
-    <div class="tip t5"><h3>✍️ Publica 1-2x por semana</h3><p>Abre la pestaña 📰 Tendencias cada lunes — 3 borradores listos para publicar en 30 segundos.</p></div>
-    <div class="tip t6"><h3>🤝 Solicita recomendaciones</h3><p>Pide una a tu supervisor en Tesa Tape y a alguien de CooproCafés. Muy valoradas por reclutadores.</p></div>
+    <div class="tip t4"><h3>🏆 Sección Destacados (Featured)</h3><p>Agrega certificado Digital Marketing UAO y foto del Exposemillero 2025.</p></div>
+    <div class="tip t5"><h3>✍️ Publica 1-2x por semana</h3><p>Usa la pestaña 📰 Tendencias cada lunes — borradores listos en 30 segundos.</p></div>
+    <div class="tip t6"><h3>🤝 Solicita recomendaciones</h3><p>Pide una a tu supervisor en Tesa Tape y a alguien de CooproCafés.</p></div>
     <div class="tip t7"><h3>🎓 Agrega Semillero MMD</h3><p>En 'Organizaciones'. Demuestra compromiso más allá del aula.</p></div>
   </div>
 
@@ -253,21 +256,81 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
       <div class="thdr">
         <div>
           <div class="sec-title" style="margin-bottom:3px">📰 Tendencias de la Semana</div>
-          <p style="font-size:12.5px;color:#5E7287;line-height:1.5">Genera borradores de posts de LinkedIn con tendencias actuales de marketing.</p>
+          <p style="font-size:12.5px;color:#5E7287;line-height:1.5">Genera posts profesionales con voz analítica. Sin introducciones. Sin relleno.</p>
         </div>
-        <button class="sbtn" id="btn-srch" onclick="fetchTrends()">🔍 Buscar</button>
+        <button class="sbtn" id="btn-srch" onclick="fetchTrends()">🔍 Generar</button>
       </div>
       <div class="howto" id="howto">
-        <div class="htitle">Cómo usarlo cada semana</div>
-        <div class="hrow"><span>📱</span><span>Alarma recurrente los lunes 8am con el link de esta app</span></div>
-        <div class="hrow"><span>🔍</span><span>Clic en Buscar tendencias</span></div>
-        <div class="hrow"><span>✏️</span><span>Elige el post, agrega un detalle personal</span></div>
-        <div class="hrow"><span>🚀</span><span>Publica en LinkedIn</span></div>
+        <div class="htitle">Flujo semanal</div>
+        <div class="hrow"><span>📱</span><span>Alarma los lunes 8am con el link de esta app</span></div>
+        <div class="hrow"><span>🔍</span><span>Generar tendencias — elige la que más conecte con tu semana</span></div>
+        <div class="hrow"><span>✏️</span><span>Agrega un dato o experiencia personal concreta</span></div>
+        <div class="hrow"><span>🚀</span><span>Publica — consistencia es lo que construye marca</span></div>
       </div>
     </div>
-    <div id="t-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="ldmsg">Generando tendencias…</p></div></div></div>
+    <div id="t-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="ldmsg">Analizando tendencias…</p></div></div></div>
     <div id="t-err" style="display:none" class="errbox"></div>
     <div id="t-res"></div>
+  </div>
+
+  <!-- LINKEDIN TAB -->
+  <div class="sec" id="s-linkedin">
+    <div id="kb-li"></div>
+
+    <!-- Segment control -->
+    <div class="seg-btns">
+      <button class="seg active" onclick="switchSeg('discover',this)">🔎 Descubrir posts</button>
+      <button class="seg" onclick="switchSeg('comment',this)">💬 Generar comentario</button>
+      <button class="seg" onclick="switchSeg('repost',this)">🔁 Repostear con opinión</button>
+    </div>
+
+    <!-- DISCOVER -->
+    <div class="subsec active" id="sub-discover">
+      <div class="card">
+        <div class="sec-title" style="margin-bottom:4px">🔎 Descubrir conversaciones activas</div>
+        <p style="font-size:12.5px;color:#5E7287;margin-bottom:14px;line-height:1.5">Genera temas relevantes esta semana y ábrelos directo en LinkedIn para ver qué está generando conversación.</p>
+        <button class="sbtn" id="btn-disc" onclick="discoverTopics()" style="width:100%;text-align:center">Generar temas de esta semana</button>
+      </div>
+      <div id="disc-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="disc-msg">Identificando conversaciones activas…</p></div></div></div>
+      <div id="disc-err" style="display:none" class="errbox"></div>
+      <div id="disc-res"></div>
+    </div>
+
+    <!-- COMMENT -->
+    <div class="subsec" id="sub-comment">
+      <div class="card">
+        <div class="sec-title" style="margin-bottom:4px">💬 Generar comentario profesional</div>
+        <p style="font-size:12.5px;color:#5E7287;margin-bottom:12px;line-height:1.5">Pega el texto de un post que encontraste en LinkedIn. La IA genera un comentario con criterio analítico que te posiciona como alguien que piensa.</p>
+        <label style="font-size:12px;font-weight:700;color:#5E7287;display:block;margin-bottom:5px">PEGA EL POST AQUÍ:</label>
+        <textarea id="post-input" rows="5" placeholder="Pega el texto del post de LinkedIn que quieres comentar..."></textarea>
+        <button class="bigbtn" id="btn-comment" onclick="genComment()">💬 Generar comentario</button>
+        <div id="comment-out" style="display:none">
+          <div class="out-hdr">
+            <span style="font-size:12.5px;font-weight:700;color:#0A66C2">Comentario generado:</span>
+            <button class="cbtn" onclick="cpEl('comment-text',this)">Copiar</button>
+          </div>
+          <pre class="ai-out" id="comment-text"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPOST -->
+    <div class="subsec" id="sub-repost">
+      <div class="card">
+        <div class="sec-title" style="margin-bottom:4px">🔁 Repostear con tu opinión</div>
+        <p style="font-size:12.5px;color:#5E7287;margin-bottom:12px;line-height:1.5">Pega el contenido que quieres repostear. La IA escribe tu opinión profesional para acompañarlo — en tu voz, no en la del original.</p>
+        <label style="font-size:12px;font-weight:700;color:#5E7287;display:block;margin-bottom:5px">CONTENIDO A REPOSTEAR:</label>
+        <textarea id="repost-input" rows="5" placeholder="Pega aquí el post, artículo o idea que quieres repostear..."></textarea>
+        <button class="bigbtn" id="btn-repost" onclick="genRepost()">🔁 Generar mi opinión</button>
+        <div id="repost-out" style="display:none">
+          <div class="out-hdr">
+            <span style="font-size:12.5px;font-weight:700;color:#0A66C2">Tu opinión para el repost:</span>
+            <button class="cbtn" onclick="cpEl('repost-text',this)">Copiar</button>
+          </div>
+          <pre class="ai-out" id="repost-text"></pre>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- REFINAR IA -->
@@ -281,8 +344,8 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
       <button class="ai-idea" onclick="setQ(this)">Reescribe mi sección Sobre mí enfocándome en marketing digital</button>
       <button class="ai-idea" onclick="setQ(this)">¿Cómo destaco el Exposemillero 2025 en mi perfil?</button>
       <button class="ai-idea" onclick="setQ(this)">Genera un mensaje para conectar con un reclutador de P&amp;G Colombia</button>
-      <button class="ai-idea" onclick="setQ(this)">¿Qué habilidades debo agregar para destacar en consumer goods?</button>
-      <textarea id="ai-in" rows="4" placeholder="Escribe tu pregunta o lo que necesitas mejorar..."></textarea>
+      <button class="ai-idea" onclick="setQ(this)">¿Qué habilidades debo reforzar para pasar de intern a analista?</button>
+      <textarea id="ai-in" rows="4" placeholder="Escribe tu pregunta o lo que necesitas..."></textarea>
       <button class="bigbtn" id="btn-ai" onclick="runAI()">✨ Generar con IA</button>
       <div id="ai-out-wrap" style="display:none">
         <div class="out-hdr">
@@ -305,29 +368,28 @@ document.getElementById('tabscroll').addEventListener('click',function(e){
   t.classList.add('active');
   document.getElementById('s-'+t.dataset.t).classList.add('active');
   renderKeys();
-  // scroll active tab into view
   t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 });
-function scrollT(d){
-  document.getElementById('tabscroll').scrollBy({left:d*150,behavior:'smooth'});
+function scrollT(d){document.getElementById('tabscroll').scrollBy({left:d*150,behavior:'smooth'});}
+
+// ─── SEGMENT ──────────────────────────────────────────
+function switchSeg(id,btn){
+  document.querySelectorAll('.seg').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.subsec').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sub-'+id).classList.add('active');
 }
 
 // ─── COPY ──────────────────────────────────────────────
 function cp(id,btn){
-  const el=document.getElementById(id);
-  // decode HTML entities for copy
-  const tmp=document.createElement('textarea');
-  tmp.innerHTML=el.innerHTML;
-  const text=el.innerText||el.textContent;
-  navigator.clipboard.writeText(text).then(()=>{
+  navigator.clipboard.writeText(document.getElementById(id).innerText||document.getElementById(id).textContent).then(()=>{
     btn.textContent='✓ Copiado';btn.classList.add('ok');
     setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok')},2200);
   });
 }
 function cpEl(id,btn){cp(id,btn);}
 function cpSkills(btn){
-  const txt='Marketing de Consumo, Trade Marketing, Marketing Digital, Gestión de Redes Sociales, Negocios Internacionales, Creación de Contenido Digital, Material POP / BTL, Gestión de Presupuestos, Microsoft Excel, Canva, Español (Nativo), Inglés (Intermedio), Trabajo en Equipo, Orientación al Cliente, Adaptabilidad';
-  navigator.clipboard.writeText(txt).then(()=>{
+  navigator.clipboard.writeText('Marketing de Consumo, Trade Marketing, Marketing Digital, Gestión de Redes Sociales, Negocios Internacionales, Creación de Contenido Digital, Material POP / BTL, Gestión de Presupuestos, Microsoft Excel, Canva, Español (Nativo), Inglés (Intermedio), Trabajo en Equipo, Orientación al Cliente, Adaptabilidad').then(()=>{
     btn.textContent='✓ Copiado';btn.classList.add('ok');
     setTimeout(()=>{btn.textContent='Copiar todas';btn.classList.remove('ok')},2200);
   });
@@ -337,12 +399,13 @@ function setQ(btn){document.getElementById('ai-in').value=btn.textContent.trim()
 // ─── API KEY ───────────────────────────────────────────
 const gk=()=>localStorage.getItem('groq_k')||'';
 const sk=v=>localStorage.setItem('groq_k',v.trim());
+const KEY_IDS=['kb-tend','kb-li','kb-ai'];
 
 function renderKeys(){
-  ['kb-tend','kb-ai'].forEach(id=>{
+  KEY_IDS.forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
     if(gk()){
-      el.innerHTML=`<div class="kok">🔑 API Key de Groq configurada <button class="kchg" onclick="rmKey()">Cambiar</button></div>`;
+      el.innerHTML=`<div class="kok">🔑 API Key de Groq activa <button class="kchg" onclick="rmKey()">Cambiar</button></div>`;
     } else {
       el.innerHTML=`<div class="kbanner">
         <strong>🔑 Configura tu API Key gratis de Groq</strong>
@@ -365,8 +428,8 @@ function saveK(inputId){
 function rmKey(){localStorage.removeItem('groq_k');renderKeys();}
 renderKeys();
 
-// ─── GROQ CALL ─────────────────────────────────────────
-async function groq(sys,usr,maxTok=1500){
+// ─── GROQ ──────────────────────────────────────────────
+async function groq(sys,usr,maxTok=1400){
   const key=gk();
   if(!key)throw new Error('NO_KEY');
   const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
@@ -375,38 +438,52 @@ async function groq(sys,usr,maxTok=1500){
     body:JSON.stringify({
       model:'llama-3.3-70b-versatile',
       max_tokens:maxTok,
-      temperature:0.7,
+      temperature:0.75,
       messages:[{role:'system',content:sys},{role:'user',content:usr}]
     })
   });
   const d=await r.json();
-  if(d.error)throw new Error(d.error.message||'Error de Groq API');
+  if(d.error)throw new Error(d.error.message||'Error Groq API');
   return d.choices[0].message.content||'';
 }
 
-// ─── PARSE TRENDS (sin JSON, usa delimitadores) ────────
-function parseTrends(raw){
-  const trends=[];
-  // Split by ##TEND blocks
-  const blocks=raw.split(/##TEND\d+##/).map(b=>b.trim()).filter(Boolean);
+// ─── TONE SYSTEM PROMPT ────────────────────────────────
+const TONE=`Eres un estratega de marketing con criterio analítico y voz directa.
+Escribes posts en LinkedIn para Fabio Andrés Alomia: estudiante de Mercadeo UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia.
+
+REGLAS ABSOLUTAS DE TONO:
+- NUNCA empieces con "Hola a todos" ni con presentaciones personales
+- NUNCA digas quién eres ni dónde trabajas al inicio — va en contexto natural si aplica
+- Máximo 2 emojis por post. Solo si añaden significado real, no decoración
+- Voz: analítica, directa, con criterio propio. Como alguien que piensa, no como alguien que se presenta
+- Empieza siempre con una observación concreta, un dato, una pregunta o una tensión del mercado
+- Párrafos cortos (2-3 líneas máximo)
+- Termina con una pregunta abierta o reflexión que invite a opinar
+- 3-4 hashtags al final, relevantes y sin exagerar
+- Sin frases corporativas vacías ni exceso de signos de exclamación
+- Español colombiano profesional`;
+
+// ─── PARSE DELIMITERS ──────────────────────────────────
+function parseBlocks(raw){
+  const items=[];
+  const blocks=raw.split(/##ITEM\d+##/).map(b=>b.trim()).filter(Boolean);
   for(const block of blocks){
-    const get=(key)=>{
-      const m=block.match(new RegExp(key+':::([\\s\\S]*?)(?=\\n[A-Z]+:::|##FIN|$)'));
+    const get=key=>{
+      const m=block.match(new RegExp(key+':::([\\s\\S]*?)(?=\\n[A-Z_]+:::|##FIN|$)'));
       return m?m[1].trim():'';
     };
     const titulo=get('TITULO');
-    const resumen=get('RESUMEN');
-    const relevancia=get('RELEVANCIA');
-    const post=get('POST');
-    if(titulo&&post) trends.push({titulo,resumen,relevancia,post});
+    const body=get('CUERPO')||get('POST')||get('TEXTO');
+    if(titulo||body) items.push({titulo,resumen:get('RESUMEN'),relevancia:get('RELEVANCIA'),body,url:get('URL'),hashtag:get('HASHTAG')});
   }
-  return trends;
+  return items;
 }
 
 // ─── LOADING MSGS ──────────────────────────────────────
-const MSGS=['Analizando tendencias de marketing…','Adaptando al mercado colombiano…','Preparando tus borradores de LinkedIn…'];
 let ldInt;
-function startLd(){let i=0;document.getElementById('ldmsg').textContent=MSGS[0];ldInt=setInterval(()=>{i=(i+1)%MSGS.length;document.getElementById('ldmsg').textContent=MSGS[i];},3000);}
+const MSGS_T=['Analizando tendencias de marketing…','Adaptando al mercado colombiano…','Aplicando criterio editorial…'];
+const MSGS_D=['Identificando conversaciones activas…','Buscando temas con tracción esta semana…','Preparando búsquedas de LinkedIn…'];
+function startLd(el,msgs){let i=0;document.getElementById(el).textContent=msgs[0];ldInt=setInterval(()=>{i=(i+1)%msgs.length;document.getElementById(el).textContent=msgs[i];},2800);}
 function stopLd(){clearInterval(ldInt);}
 
 // ─── TENDENCIAS ────────────────────────────────────────
@@ -418,95 +495,196 @@ async function fetchTrends(){
   document.getElementById('t-load').style.display='block';
   document.getElementById('t-err').style.display='none';
   document.getElementById('t-res').innerHTML='';
-  startLd();
-
+  startLd('ldmsg',MSGS_T);
   const today=new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});
+  try{
+    const raw=await groq(TONE,
+`Hoy es ${today}. Genera exactamente 3 tendencias actuales en marketing digital, consumer goods, trade marketing o estrategia de marcas en LAM.
 
-  // Prompt uses delimiters — NO JSON, zero parsing errors
-  const sys=`Eres experto en marketing digital y consumer goods para Colombia y Latinoamérica. Responde siempre en español colombiano.`;
-  const usr=`Hoy es ${today}. Genera exactamente 3 tendencias actuales de marketing digital, consumer goods, TikTok marketing o trade marketing LAM.
+Para cada una escribe un post de LinkedIn con voz analítica y directa. Sigue las reglas de tono del sistema. El post debe aportar un punto de vista, no solo describir la tendencia.
 
-Para cada tendencia escribe un post de LinkedIn en primera persona desde la perspectiva de Fabio Andrés Alomia: estudiante de Mercadeo UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf). Tono profesional pero cercano. Post de 150-200 palabras con emojis y 4-5 hashtags al final.
+USA EXACTAMENTE este formato:
 
-USA EXACTAMENTE este formato (no cambies los delimitadores):
-
-##TEND1##
-TITULO:::aquí el título corto
-RESUMEN:::aquí una sola oración explicando la tendencia
-RELEVANCIA:::aquí por qué importa en Colombia y LAM
-POST:::aquí el texto completo del post de LinkedIn
+##ITEM1##
+TITULO:::título corto de la tendencia
+RESUMEN:::una oración que explique qué está pasando
+RELEVANCIA:::por qué importa específicamente en Colombia y LAM
+POST:::texto completo del post (150-200 palabras, máx 2 emojis, 3-4 hashtags al final)
 ##FIN1##
 
-##TEND2##
-TITULO:::aquí el título corto
-RESUMEN:::aquí una sola oración
-RELEVANCIA:::aquí por qué importa en LAM
-POST:::aquí el texto completo
+##ITEM2##
+TITULO:::título
+RESUMEN:::resumen
+RELEVANCIA:::relevancia LAM
+POST:::post completo
 ##FIN2##
 
-##TEND3##
-TITULO:::aquí el título corto
-RESUMEN:::aquí una sola oración
-RELEVANCIA:::aquí por qué importa en LAM
-POST:::aquí el texto completo
-##FIN3##`;
-
-  try{
-    const raw=await groq(sys,usr,2000);
-    const trends=parseTrends(raw);
-    if(trends.length===0){
-      // Show debug info so we can fix if needed
-      showErr('No se pudieron extraer las tendencias del formato recibido.',raw.slice(0,400));
-    } else {
-      renderTrends(trends,today);
-    }
-  }catch(e){
-    showErr(e.message==='NO_KEY'?'Guarda tu API Key de Groq primero.':e.message);
-  }finally{
-    stopLd();
-    document.getElementById('t-load').style.display='none';
-    btn.disabled=false;btn.textContent='🔍 Buscar';
-  }
+##ITEM3##
+TITULO:::título
+RESUMEN:::resumen
+RELEVANCIA:::relevancia LAM
+POST:::post completo
+##FIN3##`,1800);
+    const items=parseBlocks(raw);
+    if(items.length===0){showErr('t-err','No se pudo extraer el formato.',raw.slice(0,300));}
+    else renderTrends(items,today);
+  }catch(e){showErr('t-err',e.message==='NO_KEY'?'Guarda tu API Key primero.':e.message);}
+  finally{stopLd();document.getElementById('t-load').style.display='none';btn.disabled=false;btn.textContent='🔍 Generar';}
 }
 
-function showErr(msg,dbg){
-  const el=document.getElementById('t-err');
-  el.style.display='block';
-  el.innerHTML='⚠️ '+msg+(dbg?`<div class="dbg">${dbg}</div>`:'');
-}
-
-function renderTrends(trends,today){
-  const wrap=document.getElementById('t-res');
-  let html=`<div class="meta"><span class="meta-txt">${today} · ${trends.length} tendencias</span><button class="rbtn" onclick="fetchTrends()">↻ Actualizar</button></div>`;
-  trends.forEach((t,i)=>{
+function renderTrends(items,today){
+  const w=document.getElementById('t-res');
+  let h=`<div class="meta"><span class="meta-txt">${today} · ${items.length} tendencias</span><button class="rbtn" onclick="fetchTrends()">↻ Actualizar</button></div>`;
+  items.forEach((t,i)=>{
     const pid='tp-'+i;
-    html+=`<div class="tcard">
+    h+=`<div class="tcard">
       <div style="margin-bottom:9px">
-        <div style="display:flex;align-items:center;margin-bottom:3px">
-          <span class="tnum">#${i+1}</span><span class="ttitle">${esc(t.titulo)}</span>
-        </div>
+        <div style="display:flex;align-items:center;margin-bottom:3px"><span class="tnum">#${i+1}</span><span class="ttitle">${esc(t.titulo)}</span></div>
         <p class="tsummary">${esc(t.resumen)}</p>
       </div>
-      <div class="tlam"><strong>🌎 En LAM:</strong> ${esc(t.relevancia)}</div>
-      <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-          <span style="font-size:11px;font-weight:700;color:#5E7287;text-transform:uppercase;letter-spacing:.05em">Borrador LinkedIn</span>
-          <button class="cbtn" onclick="cpPost('${pid}',this)">Copiar</button>
-        </div>
-        <pre class="box" id="${pid}">${esc(t.post)}</pre>
+      <div class="tlam"><strong>En LAM:</strong> ${esc(t.relevancia)}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+        <span style="font-size:11px;font-weight:700;color:#5E7287;text-transform:uppercase;letter-spacing:.05em">Borrador LinkedIn</span>
+        <button class="cbtn" onclick="cpPost('${pid}',this)">Copiar</button>
       </div>
+      <pre class="box" id="${pid}">${esc(t.body)}</pre>
     </div>`;
   });
-  wrap.innerHTML=html;
+  w.innerHTML=h;
 }
-function cpPost(id,btn){
-  const el=document.getElementById(id);
-  navigator.clipboard.writeText(el.textContent).then(()=>{
-    btn.textContent='✓ Copiado';btn.classList.add('ok');
-    setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok')},2200);
+
+// ─── LINKEDIN DISCOVER ────────────────────────────────
+async function discoverTopics(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const btn=document.getElementById('btn-disc');
+  btn.disabled=true;btn.textContent='Buscando…';
+  document.getElementById('disc-load').style.display='block';
+  document.getElementById('disc-err').style.display='none';
+  document.getElementById('disc-res').innerHTML='';
+  startLd('disc-msg',MSGS_D);
+  const today=new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});
+  try{
+    const raw=await groq(
+`Eres un estratega de marketing digital que conoce qué está generando conversación en LinkedIn en Colombia y LAM.`,
+`Hoy es ${today}. Genera 6 temas concretos que están generando conversación activa esta semana en LinkedIn en el ámbito de marketing digital, consumer goods, trade marketing, branding LAM o carreras en marketing.
+
+Para cada tema genera: el tema, una descripción breve de qué tipo de posts están apareciendo, y el hashtag principal para buscarlo.
+
+USA EXACTAMENTE este formato:
+
+##ITEM1##
+TITULO:::nombre del tema
+RESUMEN:::qué tipo de conversación está generando en LinkedIn esta semana
+HASHTAG:::hashtag principal para buscarlo (sin #)
+##FIN1##
+
+##ITEM2##
+TITULO:::nombre
+RESUMEN:::descripción
+HASHTAG:::hashtag
+##FIN2##
+
+##ITEM3##
+TITULO:::nombre
+RESUMEN:::descripción
+HASHTAG:::hashtag
+##FIN3##
+
+##ITEM4##
+TITULO:::nombre
+RESUMEN:::descripción
+HASHTAG:::hashtag
+##FIN4##
+
+##ITEM5##
+TITULO:::nombre
+RESUMEN:::descripción
+HASHTAG:::hashtag
+##FIN5##
+
+##ITEM6##
+TITULO:::nombre
+RESUMEN:::descripción
+HASHTAG:::hashtag
+##FIN6##`,1200);
+    const items=parseBlocks(raw);
+    if(items.length===0){showErr('disc-err','No se pudo generar los temas.',raw.slice(0,300));}
+    else renderDiscover(items);
+  }catch(e){showErr('disc-err',e.message==='NO_KEY'?'Guarda tu API Key primero.':e.message);}
+  finally{stopLd();document.getElementById('disc-load').style.display='none';btn.disabled=false;btn.textContent='Generar temas de esta semana';}
+}
+
+function renderDiscover(items){
+  const w=document.getElementById('disc-res');
+  let h=`<div class="card">
+    <p style="font-size:12px;color:#5E7287;margin-bottom:12px;line-height:1.5">Haz clic en <strong>Ver en LinkedIn</strong> para buscar estos posts directamente. Cuando encuentres uno que te interese, vuelve a la pestaña <strong>💬 Generar comentario</strong> o <strong>🔁 Repostear</strong>.</p>`;
+  items.forEach((t,i)=>{
+    const query=encodeURIComponent((t.hashtag||t.titulo||'marketing').replace(/\s/g,''));
+    const liUrl=`https://www.linkedin.com/search/results/content/?keywords=${query}&origin=GLOBAL_SEARCH_HEADER`;
+    h+=`<div class="li-topic">
+      <div style="flex:1;min-width:0">
+        <div class="li-topic-name">${esc(t.titulo)}</div>
+        <div style="font-size:11.5px;color:#5E7287;margin-top:2px;line-height:1.4">${esc(t.resumen)}</div>
+        ${t.hashtag?`<span style="font-size:11px;color:#0A66C2;font-weight:600">#${esc(t.hashtag)}</span>`:''}
+      </div>
+      <a class="li-link" href="${liUrl}" target="_blank" rel="noopener">Ver en LinkedIn →</a>
+    </div>`;
   });
+  h+='</div>';
+  w.innerHTML=h;
 }
-function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ─── COMMENT ──────────────────────────────────────────
+async function genComment(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const post=document.getElementById('post-input').value.trim();
+  if(!post){alert('Pega el texto del post que quieres comentar.');return;}
+  const btn=document.getElementById('btn-comment');
+  btn.disabled=true;btn.textContent='Generando…';
+  document.getElementById('comment-out').style.display='none';
+  try{
+    const txt=await groq(TONE+`
+
+PARA COMENTARIOS EN LINKEDIN:
+- Máximo 3-4 líneas
+- Añade una perspectiva propia: acuerda, cuestiona o amplía la idea con un ángulo diferente
+- Termina con una pregunta concreta al autor o a la audiencia
+- Tono que posicione a Fabio como alguien que piensa con criterio en marketing LAM
+- Sin halagos vacíos como "excelente post" o "totalmente de acuerdo"`,
+`Escribe un comentario profesional para este post de LinkedIn:\n\n${post}`);
+    document.getElementById('comment-text').textContent=txt;
+    document.getElementById('comment-out').style.display='block';
+  }catch(e){
+    document.getElementById('comment-text').textContent=e.message==='NO_KEY'?'Guarda tu API Key primero.':'⚠️ '+e.message;
+    document.getElementById('comment-out').style.display='block';
+  }finally{btn.disabled=false;btn.textContent='💬 Generar comentario';}
+}
+
+// ─── REPOST ───────────────────────────────────────────
+async function genRepost(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const post=document.getElementById('repost-input').value.trim();
+  if(!post){alert('Pega el contenido que quieres repostear.');return;}
+  const btn=document.getElementById('btn-repost');
+  btn.disabled=true;btn.textContent='Generando…';
+  document.getElementById('repost-out').style.display='none';
+  try{
+    const txt=await groq(TONE+`
+
+PARA REPOSTS EN LINKEDIN:
+- Escribe la opinión/introducción de Fabio (3-5 líneas) que va ANTES del contenido reposteado
+- Explica POR QUÉ comparte esto — qué le parece relevante o qué cuestiona
+- Aporta un ángulo propio relacionado con el mercado LAM o consumer goods
+- Termina con una reflexión o pregunta que invite a la conversación
+- Máximo 2 emojis, 2-3 hashtags al final`,
+`Escribe mi opinión para repostear este contenido:\n\n${post}`);
+    document.getElementById('repost-text').textContent=txt;
+    document.getElementById('repost-out').style.display='block';
+  }catch(e){
+    document.getElementById('repost-text').textContent=e.message==='NO_KEY'?'Guarda tu API Key primero.':'⚠️ '+e.message;
+    document.getElementById('repost-out').style.display='block';
+  }finally{btn.disabled=false;btn.textContent='🔁 Generar mi opinión';}
+}
 
 // ─── REFINAR IA ────────────────────────────────────────
 async function runAI(){
@@ -517,17 +695,30 @@ async function runAI(){
   btn.disabled=true;btn.textContent='Generando…';
   document.getElementById('ai-out-wrap').style.display='none';
   try{
-    const sys=`Eres experto en LinkedIn y marca personal para el mercado latinoamericano. Perfil: Fabio Andrés Alomia Ruiz, estudiante de Mercadeo y Negocios Internacionales en la UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf). Contrato extendido, abierto a nuevas oportunidades. Sectores: multinacionales, startups, agencias, consumer goods. Responde en español colombiano, tono profesional pero cercano. Si generas texto para LinkedIn, entrégalo listo para copiar y pegar.`;
-    const text=await groq(sys,inp,1200);
-    document.getElementById('ai-out').textContent=text;
+    const txt=await groq(
+`Eres experto en LinkedIn y marca personal para el mercado latinoamericano. Perfil: Fabio Andrés Alomia, estudiante de Mercadeo UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia. Abierto a nuevas oportunidades. Sectores: multinacionales, startups, agencias, consumer goods. Responde en español colombiano profesional. Si generas texto para LinkedIn, aplica voz analítica y directa, sin introduciones personales ni emojis excesivos.`,
+inp,1200);
+    document.getElementById('ai-out').textContent=txt;
     document.getElementById('ai-out-wrap').style.display='block';
   }catch(e){
     document.getElementById('ai-out').textContent=e.message==='NO_KEY'?'Guarda tu API Key primero.':'⚠️ '+e.message;
     document.getElementById('ai-out-wrap').style.display='block';
-  }finally{
-    btn.disabled=false;btn.textContent='✨ Generar con IA';
-  }
+  }finally{btn.disabled=false;btn.textContent='✨ Generar con IA';}
 }
+
+// ─── UTILS ────────────────────────────────────────────
+function showErr(elId,msg,dbg){
+  const el=document.getElementById(elId);
+  el.style.display='block';
+  el.innerHTML='⚠️ '+esc(msg)+(dbg?`<div class="dbg">${esc(dbg)}</div>`:'');
+}
+function cpPost(id,btn){
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{
+    btn.textContent='✓ Copiado';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok')},2200);
+  });
+}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 </script>
 </body>
 </html>
