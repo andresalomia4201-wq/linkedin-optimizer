@@ -18,9 +18,12 @@ body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;backgrou
 .pills{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
 .pill{background:rgba(255,255,255,.18);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.02em}
 .wrap{max-width:680px;margin:0 auto;padding:0 14px}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding:16px 0 10px;scrollbar-width:none}
+.tabs-outer{position:relative;display:flex;align-items:center;padding:12px 0 6px;gap:4px}
+.tabs-arrow{background:#fff;border:1px solid #E0E4E9;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.1);color:#5E7287;line-height:1;padding:0;font-family:inherit;transition:all .15s}
+.tabs-arrow:hover{background:#EEF3F8;color:#0A66C2}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 2px;scrollbar-width:none;scroll-behavior:smooth;flex:1}
 .tabs::-webkit-scrollbar{display:none}
-.tab{padding:7px 14px;border-radius:20px;border:none;cursor:pointer;font-size:12.5px;font-weight:700;white-space:nowrap;flex-shrink:0;background:#fff;color:#5E7287;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:all .15s;font-family:inherit}
+.tab{padding:7px 13px;border-radius:20px;border:none;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;background:#fff;color:#5E7287;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:all .15s;font-family:inherit}
 .tab.active{background:#0A66C2;color:#fff;box-shadow:0 2px 8px rgba(10,102,194,.35)}
 .card{background:#fff;border-radius:12px;border:1px solid #E0E4E9;padding:20px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .note{background:#EEF3F8;border-left:3px solid #0A66C2;border-radius:0 8px 8px 0;padding:9px 13px;margin-bottom:14px;font-size:12.5px;color:#1D4F8C;line-height:1.5}
@@ -106,7 +109,7 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.15)}
 </div>
 
 <div class="wrap">
-  <div class="tabs" id="tabs">
+  <div class="tabs-outer"><button class="tabs-arrow" onclick="scrollTabs(-1)">&#8249;</button><div class="tabs" id="tabs">
     <button class="tab active" data-tab="headline">🏷️ Titular</button>
     <button class="tab" data-tab="about">💼 Sobre mí</button>
     <button class="tab" data-tab="tesa">🏢 Tesa Tape</button>
@@ -115,7 +118,7 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.15)}
     <button class="tab" data-tab="tips">💡 Tips</button>
     <button class="tab" data-tab="tendencias">📰 Tendencias</button>
     <button class="tab" data-tab="ai">🤖 Refinar IA</button>
-  </div>
+  </div><button class="tabs-arrow" onclick="scrollTabs(1)">&#8250;</button></div>
 
   <!-- TITULAR -->
   <div class="section active" id="sec-headline">
@@ -352,7 +355,7 @@ async function callGroq(systemPrompt, userPrompt){
     method:'POST',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
     body:JSON.stringify({
-      model:'llama-3.1-70b-versatile',
+      model:'llama-3.3-70b-versatile',
       max_tokens:1500,
       messages:[
         {role:'system',content:systemPrompt},
@@ -454,6 +457,12 @@ async function callAI(){
   }finally{
     btn.disabled=false;btn.textContent='✨ Generar con IA';
   }
+}
+
+// ── TAB SCROLL ARROWS ─────────────────────────────────
+function scrollTabs(dir){
+  const tabs=document.getElementById('tabs');
+  tabs.scrollBy({left:dir*160,behavior:'smooth'});
 }
 </script>
 </body>
