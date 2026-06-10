@@ -603,50 +603,51 @@ async function googleSearch(){
   if(!query)return;
   const btn=document.getElementById('btn-gsearch');
   btn.disabled=true;btn.textContent='Buscando…';
-  document.getElementById('g-load').style.display='block';
-  document.getElementById('g-err').style.display='none';
-  document.getElementById('g-res').innerHTML='';
+
+  // Reset UI
+  ['g-load','g-err','g-res'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.style.display=id==='g-load'?'block':'none';if(id==='g-res')el.innerHTML='';}
+  });
   startLd('g-msg',['Buscando en LinkedIn…','Filtrando resultados recientes…','Encontrando posts relevantes…']);
 
-  // 10-second timeout
-  const ctrl=new AbortController();
-  const tid=setTimeout(()=>ctrl.abort(),10000);
+  const done=()=>{
+    stopLd();
+    const gl=document.getElementById('g-load');if(gl)gl.style.display='none';
+    btn.disabled=false;btn.textContent='Buscar';
+  };
 
   try{
-    const url=`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}&num=8&dateRestrict=w2&lr=lang_es&gl=co`;
-    const r=await fetch(url,{signal:ctrl.signal});
-    clearTimeout(tid);
-    const d=await r.json();
+    const apiUrl=`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}&num=8&dateRestrict=w2&lr=lang_es&gl=co`;
 
-    // Show exact Google error for debugging
+    // Use Promise.race for reliable timeout — no AbortController needed
+    const d = await Promise.race([
+      fetch(apiUrl).then(r=>r.json()),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('Sin respuesta en 12 segundos. Verifica en Google Cloud Console → APIs → Custom Search API esté habilitada y el API Key activo.')),12000))
+    ]);
+
     if(d.error){
-      const code=d.error.code||'';
+      const code=d.error.code||'?';
       const msg=d.error.message||'Error desconocido';
-      let hint='';
-      if(code===400)hint=' — Verifica que el Search Engine ID sea correcto.';
-      else if(code===403)hint=' — El API Key no tiene permiso. Ve a Google Cloud Console → API y servicios → Habilita "Custom Search API".';
-      else if(code===429)hint=' — Límite diario de búsquedas alcanzado (100/día en el plan gratuito).';
-      throw new Error(`Google API ${code}: ${msg}${hint}`);
+      const hints={
+        400:'El Search Engine ID podría estar incompleto.',
+        403:'El API Key no tiene acceso. Ve a Google Cloud Console → APIs y servicios → Biblioteca → busca "Custom Search API" → Habilitar.',
+        429:'Límite de 100 búsquedas/día alcanzado. Se renueva mañana.'
+      };
+      showErr('g-err',`Error ${code}: ${msg}${hints[code]?' — '+hints[code]:''}`);
+      done();return;
     }
 
     const items=d.items||[];
+    done();
     if(items.length===0){
-      showErr('g-err','No se encontraron resultados para "'+esc(query)+'". Prueba con palabras clave más generales o verifica que tu motor de búsqueda incluya linkedin.com/posts.');
+      showErr('g-err','Sin resultados para "'+esc(query)+'". Intenta con otras palabras clave (ej: "marketing Colombia", "trade marketing LAM").');
     } else {
       renderGoogleResults(items,query);
     }
   }catch(e){
-    clearTimeout(tid);
-    if(e.name==='AbortError'){
-      showErr('g-err','La búsqueda tardó más de 10 segundos. Verifica tu conexión o que el API Key esté activo en Google Cloud Console.');
-    } else {
-      showErr('g-err',e.message);
-    }
-  }
-  finally{
-    stopLd();
-    document.getElementById('g-load').style.display='none';
-    btn.disabled=false;btn.textContent='Buscar';
+    done();
+    showErr('g-err',e.message);
   }
 }
 
@@ -757,45 +758,37 @@ function parseRssXml(xml,source){
 async function loadFeeds(){
   const btn=document.getElementById('btn-disc');
   btn.disabled=true;btn.textContent='Cargando…';
-  document.getElementById('disc-load').style.display='block';
-  document.getElementById('disc-err').style.display='none';
-  document.getElementById('disc-res').innerHTML='';
+  const loadEl=document.getElementById('disc-load');
+  const errEl=document.getElementById('disc-err');
+  const resEl=document.getElementById('disc-res');
+  if(loadEl)loadEl.style.display='block';
+  if(errEl)errEl.style.display='none';
+  if(resEl)resEl.innerHTML='';
   allArticles=[];
-  startLd('disc-msg',['Conectando con fuentes de marketing LAM…','Trayendo artículos de esta semana…','Casi listo…']);
 
-  // Fetch feeds and show results as they arrive (don't wait for all)
-  let completed=0;
-  const total=RSS_SOURCES.length;
+  const msgs=['Conectando con fuentes LAM…','Trayendo artículos de esta semana…','Procesando contenido…'];
+  startLd('disc-msg',msgs);
 
-  const promises=RSS_SOURCES.map(s=>
-    fetchOneFeed(s).then(items=>{
-      if(items.length>0){
-        allArticles=[...allArticles,...items];
-        allArticles.sort((a,b)=>b.date-a.date);
-        // Show partial results immediately
-        if(allArticles.length>0){
-          document.getElementById('disc-load').style.display='none';
-          renderArticles(activeFilter);
-        }
-      }
-      completed++;
-      if(document.getElementById('disc-msg'))
-        document.getElementById('disc-msg').textContent=`Cargando fuentes… ${completed}/${total}`;
-    }).catch(()=>{completed++;})
-  );
+  // Give each feed 8 seconds max, then move on
+  const FEED_TIMEOUT=8000;
+  const withTimeout=(p)=>Promise.race([p,new Promise(res=>setTimeout(()=>res([]),FEED_TIMEOUT))]);
 
-  // Also set a hard 12-second deadline
-  await Promise.race([
-    Promise.allSettled(promises),
-    new Promise(res=>setTimeout(res,12000))
-  ]);
+  try{
+    const results=await Promise.all(RSS_SOURCES.map(s=>withTimeout(fetchOneFeed(s))));
+    allArticles=results.flat().filter(a=>a.title&&a.link).sort((a,b)=>b.date-a.date).slice(0,50);
+  }catch(e){
+    allArticles=[];
+  }
 
   stopLd();
-  document.getElementById('disc-load').style.display='none';
+  if(loadEl)loadEl.style.display='none';
   btn.disabled=false;btn.textContent='Cargar noticias de esta semana';
 
   if(allArticles.length===0){
-    showErr('disc-err','No se pudieron cargar los feeds. Prueba de nuevo o revisa tu conexión.');
+    if(errEl){
+      errEl.style.display='block';
+      errEl.innerHTML='⚠️ No se cargaron artículos. Verifica tu conexión e intenta de nuevo.';
+    }
   } else {
     renderArticles(activeFilter);
   }
