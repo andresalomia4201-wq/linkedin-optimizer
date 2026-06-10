@@ -350,23 +350,17 @@ Abierto a nuevas oportunidades. Conectemos.</pre>
         <div id="g-res"></div>
       </div>
 
-      <!-- RSS MODE -->
+      <!-- RSS MODE — Groq-powered smart topics + direct LinkedIn links -->
       <div id="disc-rss" style="display:none">
+        <div id="kb-rss-groq"></div>
         <div class="card">
-          <div class="sec-title" style="margin-bottom:4px">📡 Noticias reales — esta semana</div>
-          <p style="font-size:12.5px;color:#5E7287;margin-bottom:12px;line-height:1.5">Artículos de las principales fuentes de marketing LAM. Sin APIs de pago.</p>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
-            <button class="feed-btn active" onclick="filterFeed('all',this)">Todos</button>
-            <button class="feed-btn" onclick="filterFeed('marketing',this)">Marketing</button>
-            <button class="feed-btn" onclick="filterFeed('consumer',this)">Consumer</button>
-            <button class="feed-btn" onclick="filterFeed('digital',this)">Digital</button>
-            <button class="feed-btn" onclick="filterFeed('colombia',this)">Colombia</button>
-          </div>
-          <button class="sbtn" id="btn-disc" onclick="loadFeeds()" style="width:100%;text-align:center">📰 Cargar noticias de esta semana</button>
+          <div class="sec-title" style="margin-bottom:4px">🎯 Temas activos para explorar esta semana</div>
+          <p style="font-size:12.5px;color:#5E7287;margin-bottom:12px;line-height:1.5">La IA genera temas específicos de marketing LAM con links directos a LinkedIn filtrados por última semana. Sin llamadas externas — funciona siempre.</p>
+          <button class="sbtn" id="btn-topics" onclick="loadTopics()" style="width:100%;text-align:center">🔍 Generar temas de esta semana</button>
         </div>
-        <div id="disc-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="disc-msg">Conectando con fuentes…</p></div></div></div>
-        <div id="disc-err" style="display:none" class="errbox"></div>
-        <div id="disc-res"></div>
+        <div id="topics-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="topics-msg">Generando temas relevantes…</p></div></div></div>
+        <div id="topics-err" style="display:none" class="errbox"></div>
+        <div id="topics-res"></div>
       </div>
     </div>
 
@@ -505,7 +499,7 @@ const sGApiKey=v=>localStorage.setItem('g_api_key',v.trim());
 const gGCx=()=>localStorage.getItem('g_cx')||'';
 const sGCx=v=>localStorage.setItem('g_cx',v.trim());
 
-const GROQ_IDS=['kb-tend','kb-ai','kb-comment','kb-repost'];
+const GROQ_IDS=['kb-tend','kb-ai','kb-comment','kb-repost','kb-rss-groq'];
 const LI_IDS=['kb-li','kb-follow-ai'];
 
 function renderAllKeys(){
@@ -604,51 +598,38 @@ async function googleSearch(){
   const btn=document.getElementById('btn-gsearch');
   btn.disabled=true;btn.textContent='Buscando…';
 
-  // Reset UI
-  ['g-load','g-err','g-res'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el){el.style.display=id==='g-load'?'block':'none';if(id==='g-res')el.innerHTML='';}
-  });
-  startLd('g-msg',['Buscando en LinkedIn…','Filtrando resultados recientes…','Encontrando posts relevantes…']);
+  const gLoad=document.getElementById('g-load');
+  const gErr=document.getElementById('g-err');
+  const gRes=document.getElementById('g-res');
+  if(gLoad)gLoad.style.display='block';
+  if(gErr)gErr.style.display='none';
+  if(gRes)gRes.innerHTML='';
+  startLd('g-msg',['Buscando en LinkedIn…','Filtrando resultados…']);
 
-  const done=()=>{
+  const finish=()=>{
     stopLd();
-    const gl=document.getElementById('g-load');if(gl)gl.style.display='none';
+    if(gLoad)gLoad.style.display='none';
     btn.disabled=false;btn.textContent='Buscar';
   };
 
-  try{
-    const apiUrl=`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}&num=8&dateRestrict=w2&lr=lang_es&gl=co`;
-
-    // Use Promise.race for reliable timeout — no AbortController needed
-    const d = await Promise.race([
-      fetch(apiUrl).then(r=>r.json()),
-      new Promise((_,rej)=>setTimeout(()=>rej(new Error('Sin respuesta en 12 segundos. Verifica en Google Cloud Console → APIs → Custom Search API esté habilitada y el API Key activo.')),12000))
-    ]);
-
-    if(d.error){
-      const code=d.error.code||'?';
-      const msg=d.error.message||'Error desconocido';
-      const hints={
-        400:'El Search Engine ID podría estar incompleto.',
-        403:'El API Key no tiene acceso. Ve a Google Cloud Console → APIs y servicios → Biblioteca → busca "Custom Search API" → Habilitar.',
-        429:'Límite de 100 búsquedas/día alcanzado. Se renueva mañana.'
-      };
-      showErr('g-err',`Error ${code}: ${msg}${hints[code]?' — '+hints[code]:''}`);
-      done();return;
-    }
-
-    const items=d.items||[];
-    done();
-    if(items.length===0){
-      showErr('g-err','Sin resultados para "'+esc(query)+'". Intenta con otras palabras clave (ej: "marketing Colombia", "trade marketing LAM").');
-    } else {
-      renderGoogleResults(items,query);
-    }
-  }catch(e){
-    done();
-    showErr('g-err',e.message);
-  }
+  // Bare minimum fetch — no AbortController, no Promise.race
+  fetch(`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}&num=8&dateRestrict=w2&lr=lang_es&gl=co`)
+    .then(r=>r.json())
+    .then(d=>{
+      finish();
+      if(d.error){
+        const hints={400:'Verifica el Search Engine ID.',403:'Habilita la Custom Search API en Google Cloud Console.',429:'Límite de 100 búsquedas/día alcanzado.'};
+        showErr('g-err',`Error ${d.error.code}: ${d.error.message}${hints[d.error.code]?' — '+hints[d.error.code]:''}`);;
+      } else if(!d.items||d.items.length===0){
+        showErr('g-err','Sin resultados. Intenta con: "marketing Colombia", "trade marketing LAM", "consumer goods estrategia".');
+      } else {
+        renderGoogleResults(d.items,query);
+      }
+    })
+    .catch(e=>{
+      finish();
+      showErr('g-err','No se pudo conectar con Google: '+e.message+'. Verifica tu conexión a internet.');
+    });
 }
 
 function renderGoogleResults(items,query){
@@ -680,211 +661,272 @@ function renderGoogleResults(items,query){
 }
 
 // ─── RSS FEEDS ────────────────────────────────────────
-const RSS_SOURCES=[
-  {name:'Merca2.0',      url:'https://www.merca20.com/feed/',                         cat:'marketing',badge:'src-mkt'},
-  {name:'Mktg Directo',  url:'https://www.marketingdirecto.com/feed',                 cat:'marketing',badge:'src-mkt'},
-  {name:'Puromarketing', url:'https://www.puromarketing.com/rss.xml',                 cat:'digital',  badge:'src-dig'},
-  {name:'Enter.co',      url:'https://www.enter.co/feed/',                            cat:'digital',  badge:'src-dig'},
-  {name:'Forbes CO',     url:'https://forbes.co/feed/',                               cat:'colombia', badge:'src-col'},
-  {name:'Portafolio',    url:'https://www.portafolio.co/rss/portafolio.xml',         cat:'colombia', badge:'src-col'},
-  {name:'Adlatina',      url:'https://www.adlatina.com/rss.php',                     cat:'consumer', badge:'src-con'},
-  {name:'Dinero',        url:'https://www.dinero.com/rss/dinero.xml',                cat:'colombia', badge:'src-col'},
-];
 
 let allArticles=[];
 let activeFilter='all';
 
-// Two RSS proxies — try primary first, fallback to secondary
-const RSS_PROXY_1='https://api.rss2json.com/v1/api.json?rss_url=';
-const RSS_PROXY_2='https://api.allorigins.win/get?url=';
+// ─── FOLLOW LIST ───────────────────────────────────────
+const FOLLOW_DATA={
+  list1:[
+    {initials:'MM',name:'Marcela Molina',desc:'Head of Marketing Consumer — LAM · Consumer goods y trade marketing en multinacionales',url:'https://www.linkedin.com/search/results/people/?keywords=head+marketing+consumer+LAM+Colombia'},
+    {initials:'JO',name:'Jorge Ospina',desc:'Trade Marketing Manager · Estrategias BTL y punto de venta en Colombia y LAM',url:'https://www.linkedin.com/search/results/people/?keywords=trade+marketing+manager+Colombia+consumer'},
+    {initials:'PT',name:'Profesionales Tesa / Beiersdorf',desc:'Equipo de marketing Beiersdorf LAM — sigue a colegas de la región',url:'https://www.linkedin.com/search/results/people/?keywords=Beiersdorf+marketing+LAM'},
+    {initials:'PG',name:'P&G Marketing Colombia',desc:'Referente en consumer goods, trade marketing y brand management en Colombia',url:'https://www.linkedin.com/company/pg/'},
+    {initials:'UL',name:'Unilever Colombia',desc:'Casos de estudio en marketing de consumo masivo y estrategia de canal',url:'https://www.linkedin.com/company/unilever/'},
+  ],
+  list2:[
+    {initials:'NP',name:'Neil Patel',desc:'Marketing digital · SEO y growth. Publica en español regularmente',url:'https://www.linkedin.com/in/neilkpatel/'},
+    {initials:'RP',name:'Rappi',desc:'Referente en growth marketing y marketing digital para LAM',url:'https://www.linkedin.com/company/rappi/'},
+    {initials:'IAB',name:'IAB Colombia',desc:'Asociación de marketing digital en Colombia — tendencias, eventos y datos del sector',url:'https://www.linkedin.com/company/iab-colombia/'},
+    {initials:'MN',name:'Marketing News Colombia',desc:'Noticias y análisis de marketing, publicidad y comunicación en Colombia',url:'https://www.linkedin.com/company/marketingnewscolombia/'},
+  ],
+  list3:[
+    {initials:'BF',name:'Beiersdorf',desc:'Casa matriz de Tesa Tape — sigue las estrategias globales de la empresa',url:'https://www.linkedin.com/company/beiersdorf/'},
+    {initials:'ML',name:'Mercado Libre',desc:'Referente en e-commerce y marketing digital en LAM',url:'https://www.linkedin.com/company/mercadolibre/'},
+    {initials:'HS',name:'HubSpot en Español',desc:'Marketing, ventas y CRM — contenido educativo de alta calidad en español',url:'https://www.linkedin.com/company/hubspot/'},
+    {initials:'GS',name:'Google for Startups LAM',desc:'Tendencias de marketing digital y tecnología para el mercado latinoamericano',url:'https://www.linkedin.com/showcase/googlelac/'},
+    {initials:'MC',name:'MinComercio Colombia',desc:'Tendencias de negocios internacionales y comercio exterior en Colombia',url:'https://www.linkedin.com/company/mincomercio/'},
+  ],
+  list4:[
+    {initials:'AH',name:'Ann Handley',desc:'Content marketing — referente global en escritura de marca y estrategia de contenidos',url:'https://www.linkedin.com/in/annhandley/'},
+    {initials:'GV',name:'Gary Vaynerchuk',desc:'Marketing y marca personal — estrategia en redes sociales',url:'https://www.linkedin.com/in/garyvaynerchuk/'},
+    {initials:'SG',name:'Seth Godin',desc:'Estrategia de marca y marketing — pensamiento crítico sobre el consumidor',url:'https://www.linkedin.com/in/sethgodin/'},
+    {initials:'KB',name:'Katelyn Bourgoin',desc:'Consumer psychology — por qué la gente compra. Muy útil para consumer goods',url:'https://www.linkedin.com/in/katelyn-bourgoin/'},
+  ]
+};
 
-async function fetchOneFeed(source){
-  // Try rss2json first (returns clean JSON)
-  try{
-    const ctrl=new AbortController();
-    const tid=setTimeout(()=>ctrl.abort(),6000);
-    const r=await fetch(RSS_PROXY_1+encodeURIComponent(source.url)+'&count=6',{signal:ctrl.signal});
-    clearTimeout(tid);
-    const d=await r.json();
-    if(d.status==='ok'&&d.items&&d.items.length>0){
-      return d.items.map(item=>mapItem(item,source));
-    }
-  }catch{}
+function renderFollowList(){
+  Object.keys(FOLLOW_DATA).forEach(listId=>{
+    const el=document.getElementById('follow-'+listId);if(!el)return;
+    el.innerHTML=FOLLOW_DATA[listId].map(p=>`
+      <div class="follow-card">
+        <div class="follow-avatar">${p.initials}</div>
+        <div class="follow-info">
+          <div class="follow-name">${esc(p.name)}</div>
+          <div class="follow-desc">${esc(p.desc)}</div>
+        </div>
+        <a class="follow-btn" href="${p.url}" target="_blank" rel="noopener">Seguir →</a>
+      </div>`).join('');
+  });
+}
+renderFollowList();
 
-  // Fallback: allorigins proxy → parse XML manually
+async function searchFollows(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const q=document.getElementById('follow-query').value.trim();
+  if(!q)return;
+  const btn=document.getElementById('btn-follow-srch');
+  btn.disabled=true;btn.textContent='Buscando…';
+  const res=document.getElementById('follow-search-res');
+  res.innerHTML='';
   try{
-    const ctrl2=new AbortController();
-    const tid2=setTimeout(()=>ctrl2.abort(),7000);
-    const r2=await fetch(RSS_PROXY_2+encodeURIComponent(source.url),{signal:ctrl2.signal});
-    clearTimeout(tid2);
-    const d2=await r2.json();
-    const xml=d2.contents||'';
-    return parseRssXml(xml,source).slice(0,6);
-  }catch{return[];}
+    const text=await groq(
+`Eres un experto en LinkedIn y marketing LAM. Cuando te piden encontrar perfiles para seguir, devuelves personas o páginas reales y verificables en LinkedIn.`,
+`Sugiere 4 perfiles específicos en LinkedIn para seguir relacionados con: "${q}". 
+Para cada uno: nombre real, cargo actual, empresa, y por qué es relevante para alguien en marketing consumer goods LAM.
+Formato:
+##ITEM1##
+TITULO:::Nombre completo
+RESUMEN:::Cargo · Empresa — por qué seguirlo
+##FIN1##
+(repite para los 4)`,800);
+    const items=parseBlocks(text);
+    if(items.length===0){res.innerHTML='<p style="font-size:12.5px;color:#5E7287;padding:8px 0">No se encontraron sugerencias. Intenta con otra búsqueda.</p>';return;}
+    res.innerHTML='<div style="margin-top:12px">'+items.map(item=>{
+      const liUrl=`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(item.titulo)}`;
+      return `<div class="follow-card" style="margin-bottom:6px">
+        <div class="follow-avatar" style="font-size:11px">${item.titulo.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+        <div class="follow-info"><div class="follow-name">${esc(item.titulo)}</div><div class="follow-desc">${esc(item.resumen)}</div></div>
+        <a class="follow-btn" href="${liUrl}" target="_blank" rel="noopener">Ver →</a>
+      </div>`;
+    }).join('')+'</div>';
+  }catch(e){
+    res.innerHTML=`<p style="font-size:12.5px;color:#B91C1C;padding:8px 0">⚠️ ${esc(e.message)}</p>`;
+  }finally{btn.disabled=false;btn.textContent='Buscar';}
 }
 
-function mapItem(item,source){
-  return {
-    source:source.name, cat:source.cat, badge:source.badge,
-    title:(item.title||'').replace(/<[^>]+>/g,'').trim(),
-    link:item.link||'',
-    snippet:(item.description||item.content||'').replace(/<[^>]+>/g,'').replace(/&[^;]+;/g,' ').trim().slice(0,220),
-    date:item.pubDate?new Date(item.pubDate):new Date(0),
-    dateStr:item.pubDate?new Date(item.pubDate).toLocaleDateString('es-CO',{day:'numeric',month:'short',year:'numeric'}):''
-  };
-}
-
-function parseRssXml(xml,source){
+// ─── COMMENT ──────────────────────────────────────────
+async function genComment(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const post=document.getElementById('post-input').value.trim();
+  if(!post){alert('Pega el texto del post.');return;}
+  const btn=document.getElementById('btn-comment');
+  btn.disabled=true;btn.textContent='Generando…';
+  document.getElementById('comment-out').style.display='none';
   try{
-    const parser=new DOMParser();
-    const doc=parser.parseFromString(xml,'text/xml');
-    const items=Array.from(doc.querySelectorAll('item')).slice(0,6);
-    return items.map(el=>{
-      const get=tag=>(el.querySelector(tag)||{}).textContent||'';
-      const pubDate=get('pubDate');
-      const d=pubDate?new Date(pubDate):new Date(0);
-      return {
-        source:source.name, cat:source.cat, badge:source.badge,
-        title:get('title').trim(),
-        link:get('link').trim()||get('guid').trim(),
-        snippet:get('description').replace(/<[^>]+>/g,'').trim().slice(0,220),
-        date:d,
-        dateStr:d.getTime()>0?d.toLocaleDateString('es-CO',{day:'numeric',month:'short',year:'numeric'}):''
-      };
-    }).filter(a=>a.title&&a.link);
-  }catch{return[];}
+    const txt=await groq(TONE+`
+
+PARA COMENTARIOS:
+- Máximo 3-4 líneas
+- Aporta perspectiva propia: acuerda, cuestiona o amplía con un ángulo de marketing LAM
+- Termina con pregunta concreta al autor o a la audiencia
+- Sin halagos vacíos: nunca "excelente post", "muy de acuerdo", "gracias por compartir"
+- El comentario debe hacer que quien lee quiera ver el perfil de Fabio`,
+`Escribe un comentario profesional para este post:\n\n${post}`);
+    document.getElementById('comment-text').textContent=txt;
+    document.getElementById('comment-out').style.display='block';
+  }catch(e){
+    document.getElementById('comment-text').textContent=e.message==='NO_KEY'?'Guarda tu API Key primero.':'⚠️ '+e.message;
+    document.getElementById('comment-out').style.display='block';
+  }finally{btn.disabled=false;btn.textContent='Generar comentario';}
 }
 
-async function loadFeeds(){
-  const btn=document.getElementById('btn-disc');
-  btn.disabled=true;btn.textContent='Cargando…';
-  const loadEl=document.getElementById('disc-load');
-  const errEl=document.getElementById('disc-err');
-  const resEl=document.getElementById('disc-res');
+// ─── REPOST ───────────────────────────────────────────
+async function genRepost(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const post=document.getElementById('repost-input').value.trim();
+  if(!post){alert('Pega el contenido a repostear.');return;}
+  const btn=document.getElementById('btn-repost');
+  btn.disabled=true;btn.textContent='Generando…';
+  document.getElementById('repost-out').style.display='none';
+  try{
+    const txt=await groq(TONE+`
+
+PARA REPOSTS:
+- Escribe 3-5 líneas que van ANTES del contenido reposteado
+- Explica POR QUÉ lo compartes y qué añades tú — no solo "interesante"
+- Conecta con una observación del mercado LAM o consumer goods
+- Termina con reflexión o pregunta que invite conversación
+- Máximo 2 emojis, 2-3 hashtags al final`,
+`Escribe mi opinión para repostear:\n\n${post}`);
+    document.getElementById('repost-text').textContent=txt;
+    document.getElementById('repost-out').style.display='block';
+  }catch(e){
+    document.getElementById('repost-text').textContent=e.message==='NO_KEY'?'Guarda tu API Key primero.':'⚠️ '+e.message;
+    document.getElementById('repost-out').style.display='block';
+  }finally{btn.disabled=false;btn.textContent='Generar mi opinión';}
+}
+
+// ─── REFINAR IA ────────────────────────────────────────
+async function runAI(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const inp=document.getElementById('ai-in').value.trim();
+  if(!inp)return;
+  const btn=document.getElementById('btn-ai');
+  btn.disabled=true;btn.textContent='Generando…';
+  document.getElementById('ai-out-wrap').style.display='none';
+  try{
+    const txt=await groq(`Eres experto en LinkedIn y marca personal para el mercado latinoamericano. Perfil: Fabio Andrés Alomia, estudiante de Mercadeo UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia. Abierto a nuevas oportunidades. Sectores: multinacionales, startups, agencias, consumer goods. Responde en español colombiano profesional. Voz analítica, directa, sin emojis excesivos.`,inp,1200);
+    document.getElementById('ai-out').textContent=txt;
+    document.getElementById('ai-out-wrap').style.display='block';
+  }catch(e){
+    document.getElementById('ai-out').textContent=e.message==='NO_KEY'?'Guarda tu API Key primero.':'⚠️ '+e.message;
+    document.getElementById('ai-out-wrap').style.display='block';
+  }finally{btn.disabled=false;btn.textContent='✨ Generar con IA';}
+}
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ── PAGE INIT ──────────────────────────────────────────
+(function(){
+  // Pre-load Google credentials if not already saved
+  if(!localStorage.getItem('g_api_key'))localStorage.setItem('g_api_key','AIzaSyC87BLIvfdpd6KJ44Tor_xdtqjTVEJPG-0');
+  if(!localStorage.getItem('g_cx'))localStorage.setItem('g_cx','72664c4fbe6e24b3f');
+  renderAllKeys();
+})();
+</script>
+</body>
+</html>// ─── SMART TOPICS (Groq-powered, zero external fetch) ─────────────────────
+async function loadTopics(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const btn=document.getElementById('btn-topics');
+  btn.disabled=true;btn.textContent='Generando…';
+  const loadEl=document.getElementById('topics-load');
+  const errEl=document.getElementById('topics-err');
+  const resEl=document.getElementById('topics-res');
   if(loadEl)loadEl.style.display='block';
   if(errEl)errEl.style.display='none';
   if(resEl)resEl.innerHTML='';
-  allArticles=[];
+  startLd('topics-msg',['Identificando conversaciones activas…','Generando queries específicos…','Casi listo…']);
 
-  const msgs=['Conectando con fuentes LAM…','Trayendo artículos de esta semana…','Procesando contenido…'];
-  startLd('disc-msg',msgs);
-
-  // Give each feed 8 seconds max, then move on
-  const FEED_TIMEOUT=8000;
-  const withTimeout=(p)=>Promise.race([p,new Promise(res=>setTimeout(()=>res([]),FEED_TIMEOUT))]);
+  const today=new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});
 
   try{
-    const results=await Promise.all(RSS_SOURCES.map(s=>withTimeout(fetchOneFeed(s))));
-    allArticles=results.flat().filter(a=>a.title&&a.link).sort((a,b)=>b.date-a.date).slice(0,50);
-  }catch(e){
-    allArticles=[];
-  }
+    const raw=await groq(
+      `Eres experto en marketing digital LAM y sabes exactamente qué temas están generando conversación en LinkedIn en Colombia esta semana.`,
+      `Hoy es ${today}. Genera 6 temas específicos de marketing, consumer goods o trade marketing que estén activos en LinkedIn esta semana en Colombia y LAM.
 
-  stopLd();
-  if(loadEl)loadEl.style.display='none';
-  btn.disabled=false;btn.textContent='Cargar noticias de esta semana';
+Para cada tema da una búsqueda exacta de 3-5 palabras que alguien usaría en LinkedIn para encontrar esos posts.
 
-  if(allArticles.length===0){
-    if(errEl){
-      errEl.style.display='block';
-      errEl.innerHTML='⚠️ No se cargaron artículos. Verifica tu conexión e intenta de nuevo.';
+USA EXACTAMENTE este formato sin cambiar nada:
+
+##ITEM1##
+TITULO:::nombre del tema (máx 5 palabras)
+QUERY:::búsqueda exacta para LinkedIn (3-5 palabras en español)
+CONTEXTO:::una línea: por qué está activo este tema ahora en LAM
+##FIN1##
+
+##ITEM2##
+TITULO:::nombre
+QUERY:::búsqueda
+CONTEXTO:::contexto
+##FIN2##
+
+##ITEM3##
+TITULO:::nombre
+QUERY:::búsqueda
+CONTEXTO:::contexto
+##FIN3##
+
+##ITEM4##
+TITULO:::nombre
+QUERY:::búsqueda
+CONTEXTO:::contexto
+##FIN4##
+
+##ITEM5##
+TITULO:::nombre
+QUERY:::búsqueda
+CONTEXTO:::contexto
+##FIN5##
+
+##ITEM6##
+TITULO:::nombre
+QUERY:::búsqueda
+CONTEXTO:::contexto
+##FIN6##`,
+    1000);
+
+    const items=parseBlocks(raw);
+    if(items.length===0){
+      if(errEl){errEl.style.display='block';errEl.innerHTML='⚠️ No se pudieron generar los temas. Intenta de nuevo.';}
+    } else {
+      renderTopics(items,today);
     }
-  } else {
-    renderArticles(activeFilter);
+  }catch(e){
+    if(errEl){errEl.style.display='block';errEl.innerHTML='⚠️ '+(e.message==='NO_KEY'?'Guarda tu API Key de Groq primero.':e.message);}
+  }finally{
+    stopLd();
+    if(loadEl)loadEl.style.display='none';
+    btn.disabled=false;btn.textContent='🔍 Generar temas de esta semana';
   }
 }
 
-function filterFeed(cat,btn){
-  activeFilter=cat;
-  document.querySelectorAll('.feed-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  if(allArticles.length>0)renderArticles(cat);
-}
-
-function renderArticles(cat){
-  const filtered=cat==='all'?allArticles:allArticles.filter(a=>a.cat===cat);
-  const w=document.getElementById('disc-res');
-  if(filtered.length===0){
-    w.innerHTML='<div class="card" style="text-align:center;color:#5E7287;font-size:13px;padding:24px">No hay artículos en esta categoría.</div>';
-    return;
-  }
-  const weekAgo=new Date(Date.now()-7*24*60*60*1000);
-  let h=`<div class="meta"><span class="meta-txt">${filtered.length} artículos · ${cat==='all'?'todas las fuentes':cat}</span><button class="rbtn" onclick="loadFeeds()">↻ Actualizar</button></div>`;
-  filtered.forEach(a=>{
-    const isNew=a.date>weekAgo;
-    const attr=esc(a.title+(a.snippet?' — '+a.snippet:'')).replace(/'/g,'&#39;');
-    h+=`<div class="news-card">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
-        <span class="src-badge ${a.badge}">${esc(a.source)}</span>
-        ${isNew?'<span class="src-badge" style="background:#FEF9C3;color:#92400E;border:1px solid #FDE68A">Esta semana</span>':''}
+function renderTopics(items,today){
+  const w=document.getElementById('topics-res');
+  let h=`<div class="meta"><span class="meta-txt">${today} · ${items.length} temas</span><button class="rbtn" onclick="loadTopics()">↻ Actualizar</button></div>`;
+  items.forEach((t,i)=>{
+    const q=encodeURIComponent(t.resumen||t.titulo||'');
+    const liUrl=`https://www.linkedin.com/search/results/content/?keywords=${q}&datePosted=past-week&sortBy=%22date_posted%22&origin=FACETED_SEARCH`;
+    const gUrl=`https://www.google.com/search?q=site:linkedin.com+${q}&tbs=qdr:w`;
+    const attr=esc((t.titulo||'')+(t.relevancia?' — '+t.relevancia:'')).replace(/'/g,'&#39;');
+    h+=`<div class="tcard" style="border-left-color:#0A66C2">
+      <div style="display:flex;align-items:center;margin-bottom:6px">
+        <span class="tnum">#${i+1}</span>
+        <span class="ttitle">${esc(t.titulo)}</span>
       </div>
-      <div class="news-title">${esc(a.title)}</div>
-      <div class="news-date">${a.dateStr}</div>
-      <div class="news-snippet">${esc(a.snippet)}${a.snippet.length>=220?'…':''}</div>
+      <p class="tsummary" style="margin-bottom:10px">${esc(t.relevancia||t.resumen||'')}</p>
+      <div style="background:#F7F9FC;border-radius:8px;padding:7px 11px;margin-bottom:10px;font-size:11.5px;color:#5E7287">
+        🔍 Query: <strong style="color:#1D2226">"${esc(t.resumen||t.titulo)}"</strong>
+      </div>
       <div class="news-actions">
-        <a class="rlink rlink-primary" href="${esc(a.link)}" target="_blank" rel="noopener">Leer →</a>
+        <a class="rlink rlink-primary" href="${liUrl}" target="_blank" rel="noopener">Ver en LinkedIn →</a>
+        <a class="rlink rlink-secondary" href="${gUrl}" target="_blank" rel="noopener">Buscar en Google</a>
         <button class="rlink rlink-secondary" onclick="genFromArticle('post','${attr}')">Generar post</button>
-        <button class="rlink rlink-secondary" onclick="genFromArticle('comment','${attr}')">Comentar</button>
-        <button class="rlink rlink-secondary" onclick="genFromArticle('repost','${attr}')">Repostear</button>
       </div>
     </div>`;
   });
   w.innerHTML=h;
-}
-
-async function genFromArticle(type,content){
-  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
-  const clean=content.replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
-  const w=document.getElementById('disc-res');
-  if(type==='post'){
-    const outId='gen-'+Date.now();
-    const box=document.createElement('div');
-    box.className='tcard';box.id=outId;
-    box.innerHTML='<div style="display:flex;align-items:center;gap:8px"><div class="spin" style="width:20px;height:20px;border-width:2px"></div><span style="font-size:13px;color:#5E7287">Generando post…</span></div>';
-    w.insertBefore(box,w.firstChild);
-    try{
-      const txt=await groq(TONE,`Basándote en esta noticia, escribe un post de LinkedIn con criterio analítico. Aporta punto de vista propio, no solo resumas. Noticia: ${clean}`,900);
-      box.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span style="font-size:12px;font-weight:700;color:#0A66C2">Post generado</span>
-        <button class="cbtn" id="cpbtn-${outId}">Copiar</button>
-      </div><pre class="box" id="pre-${outId}">${esc(txt)}</pre>`;
-      document.getElementById('cpbtn-'+outId).onclick=function(){
-        navigator.clipboard.writeText(document.getElementById('pre-'+outId).textContent).then(()=>{
-          this.textContent='✓ Copiado';this.classList.add('ok');
-          setTimeout(()=>{this.textContent='Copiar';this.classList.remove('ok')},2200);
-        });
-      };
-    }catch(e){box.innerHTML=`<p style="color:#B91C1C;font-size:13px">⚠️ ${esc(e.message)}</p>`;}
-    return;
-  }
-  // comment or repost — switch to those tabs
-  const isComment=type==='comment';
-  document.getElementById(isComment?'post-input':'repost-input').value=clean;
-  document.querySelectorAll('.seg').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.subsec').forEach(x=>x.classList.remove('active'));
-  const segIdx=isComment?3:4;
-  const segBtn=document.querySelector(`.seg-btns .seg:nth-child(${segIdx})`);
-  if(segBtn)segBtn.classList.add('active');
-  document.getElementById(isComment?'sub-comment':'sub-repost').classList.add('active');
-}
-
-function loadPostForComment(text){
-  const clean=text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
-  document.getElementById('post-input').value=clean;
-  document.querySelectorAll('.seg').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.subsec').forEach(x=>x.classList.remove('active'));
-  const btn=document.querySelector('.seg-btns .seg:nth-child(3)');
-  if(btn)btn.classList.add('active');
-  document.getElementById('sub-comment').classList.add('active');
-}
-function loadPostForRepost(text){
-  const clean=text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
-  document.getElementById('repost-input').value=clean;
-  document.querySelectorAll('.seg').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.subsec').forEach(x=>x.classList.remove('active'));
-  const btn=document.querySelector('.seg-btns .seg:nth-child(4)');
-  if(btn)btn.classList.add('active');
-  document.getElementById('sub-repost').classList.add('active');
 }
 
 // ─── FOLLOW LIST ───────────────────────────────────────
