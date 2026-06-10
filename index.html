@@ -7,38 +7,46 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#EEF3F8;min-height:100vh;padding-bottom:48px}
-.header{background:linear-gradient(135deg,#0A66C2 0%,#0D8ECF 100%);padding:28px 20px 22px;overflow:hidden;position:relative}
-.header::before{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;background:rgba(255,255,255,.07);border-radius:50%}
-.header::after{content:'';position:absolute;bottom:-20px;left:60%;width:90px;height:90px;background:rgba(255,255,255,.05);border-radius:50%}
-.header-inner{max-width:680px;margin:0 auto;position:relative}
-.header-row{display:flex;align-items:center;gap:14px}
-.in-box{width:48px;height:48px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;flex-shrink:0}
-.header h1{font-size:19px;font-weight:800;color:#fff;letter-spacing:-.02em}
-.header p{font-size:13px;color:rgba(255,255,255,.8);font-weight:500;margin-top:3px}
-.pills{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
-.pill{background:rgba(255,255,255,.18);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.02em}
-.wrap{max-width:680px;margin:0 auto;padding:0 14px}
-.tabs-outer{position:relative;display:flex;align-items:center;padding:12px 0 6px;gap:4px}
-.tabs-arrow{background:#fff;border:1px solid #E0E4E9;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.1);color:#5E7287;line-height:1;padding:0;font-family:inherit;transition:all .15s}
-.tabs-arrow:hover{background:#EEF3F8;color:#0A66C2}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 2px;scrollbar-width:none;scroll-behavior:smooth;flex:1}
-.tabs::-webkit-scrollbar{display:none}
-.tab{padding:7px 13px;border-radius:20px;border:none;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;background:#fff;color:#5E7287;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:all .15s;font-family:inherit}
-.tab.active{background:#0A66C2;color:#fff;box-shadow:0 2px 8px rgba(10,102,194,.35)}
-.card{background:#fff;border-radius:12px;border:1px solid #E0E4E9;padding:20px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-.note{background:#EEF3F8;border-left:3px solid #0A66C2;border-radius:0 8px 8px 0;padding:9px 13px;margin-bottom:14px;font-size:12.5px;color:#1D4F8C;line-height:1.5}
-.section-title{font-size:15px;font-weight:800;color:#0A66C2;letter-spacing:-.01em;margin-bottom:12px}
-.copy-row{display:flex;justify-content:flex-end;margin-bottom:8px}
-.copy-btn{background:#0A66C2;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.02em;transition:background .2s;white-space:nowrap;font-family:inherit}
-.copy-btn.ok{background:#057642}
-pre.content{margin:0;background:#F7F9FC;border:1px solid #E8ECF0;border-radius:8px;padding:14px 16px;font-size:13.5px;color:#1D2226;line-height:1.75;white-space:pre-wrap;word-break:break-word;font-family:inherit}
-.skill-tag{display:inline-block;padding:5px 13px;border-radius:20px;font-size:13px;margin:4px}
-.skill-top{background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-weight:600}
-.skill-other{background:#F7F9FC;border:1px solid #E0E4E9;color:#3D4A58;font-weight:500}
-.skill-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px}
-.tip-card{border-radius:12px;padding:14px 16px;margin-bottom:12px}
-.tip-card h3{font-size:14px;font-weight:700;margin-bottom:6px}
-.tip-card p{font-size:13.5px;color:#374151;line-height:1.65}
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#0A66C2,#0D8ECF);padding:24px 16px 20px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;background:rgba(255,255,255,.07);border-radius:50%}
+.hdr-in{max-width:680px;margin:0 auto;position:relative}
+.hdr-row{display:flex;align-items:center;gap:12px}
+.in-box{width:44px;height:44px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;flex-shrink:0}
+.hdr h1{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.hdr p{font-size:12px;color:rgba(255,255,255,.8);font-weight:500;margin-top:2px}
+.pills{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.18);color:#fff;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px}
+/* WRAP */
+.wrap{max-width:680px;margin:0 auto;padding:0 12px}
+/* TABS */
+.tabs-outer{display:flex;align-items:center;gap:4px;padding:12px 0 8px}
+.tab-arr{background:#fff;border:1px solid #E0E4E9;border-radius:50%;width:28px;height:28px;min-width:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:#5E7287;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:0;font-family:inherit;transition:all .15s;line-height:1}
+.tab-arr:hover{background:#EEF3F8;color:#0A66C2;border-color:#0A66C2}
+.tabs-scroll{display:flex;gap:5px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:2px 1px;flex:1}
+.tabs-scroll::-webkit-scrollbar{display:none}
+.tab{padding:6px 12px;border-radius:20px;border:none;cursor:pointer;font-size:11.5px;font-weight:700;white-space:nowrap;flex-shrink:0;background:#fff;color:#5E7287;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:all .15s;font-family:inherit}
+.tab.active{background:#0A66C2;color:#fff;box-shadow:0 2px 8px rgba(10,102,194,.3)}
+/* SECTION */
+.sec{display:none}.sec.active{display:block}
+/* CARD */
+.card{background:#fff;border-radius:12px;border:1px solid #E0E4E9;padding:18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.sec-title{font-size:14px;font-weight:800;color:#0A66C2;letter-spacing:-.01em;margin-bottom:10px}
+.note{background:#EEF3F8;border-left:3px solid #0A66C2;border-radius:0 8px 8px 0;padding:8px 12px;margin-bottom:12px;font-size:12px;color:#1D4F8C;line-height:1.5}
+.copy-row{display:flex;justify-content:flex-end;margin-bottom:7px}
+pre.box{margin:0;background:#F7F9FC;border:1px solid #E8ECF0;border-radius:8px;padding:12px 14px;font-size:13px;color:#1D2226;line-height:1.75;white-space:pre-wrap;word-break:break-word;font-family:inherit}
+/* COPY BTN */
+.cbtn{background:#0A66C2;color:#fff;border:none;padding:5px 14px;border-radius:6px;cursor:pointer;font-size:11.5px;font-weight:700;transition:background .2s;white-space:nowrap;font-family:inherit}
+.cbtn.ok{background:#057642}
+/* SKILLS */
+.stag{display:inline-block;padding:4px 11px;border-radius:20px;font-size:12.5px;margin:3px}
+.s1{background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-weight:600}
+.s2{background:#F7F9FC;border:1px solid #E0E4E9;color:#3D4A58;font-weight:500}
+.slbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:0 0 6px}
+/* TIPS */
+.tip{border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.tip h3{font-size:13.5px;font-weight:700;margin-bottom:5px}
+.tip p{font-size:13px;color:#374151;line-height:1.6}
 .t1{background:#F0FDF4;border:1px solid #BBF7D0}.t1 h3{color:#166534}
 .t2{background:#EFF6FF;border:1px solid #BFDBFE}.t2 h3{color:#1D4ED8}
 .t3{background:#FDF4FF;border:1px solid #E9D5FF}.t3 h3{color:#7E22CE}
@@ -46,58 +54,68 @@ pre.content{margin:0;background:#F7F9FC;border:1px solid #E8ECF0;border-radius:8
 .t5{background:#F0F9FF;border:1px solid #BAE6FD}.t5 h3{color:#0369A1}
 .t6{background:#FEF9C3;border:1px solid #FDE68A}.t6 h3{color:#92400E}
 .t7{background:#F0FDF4;border:1px solid #BBF7D0}.t7 h3{color:#166534}
-.protip{background:#FFF7ED;border:1px solid #FED7AA;border-radius:12px;padding:14px 16px;font-size:13px;color:#7C2D12;line-height:1.6}
-.trend-card{background:#fff;border-radius:12px;border:1px solid #E0E4E9;border-left:3px solid #0A66C2;padding:20px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-.trend-num{background:#0A66C2;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-right:8px}
-.trend-title{font-size:14px;font-weight:800;color:#1D2226}
-.trend-summary{font-size:13px;color:#5E7287;line-height:1.5;margin-top:4px}
-.trend-lam{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:8px 12px;margin:12px 0;font-size:12px;color:#166534}
-.big-btn{width:100%;background:#0A66C2;color:#fff;border:none;padding:11px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;transition:background .2s;margin-top:10px;font-family:inherit}
-.big-btn:disabled{background:#94A3B8;cursor:not-allowed}
-.search-btn{background:#0A66C2;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;white-space:nowrap;transition:background .2s;flex-shrink:0;font-family:inherit}
-.search-btn:disabled{background:#94A3B8;cursor:not-allowed}
-.ai-idea{display:block;width:100%;text-align:left;background:#F7F9FC;border:1px solid #E0E4E9;border-radius:8px;padding:8px 12px;margin-bottom:6px;cursor:pointer;font-size:13px;color:#3D4A58;line-height:1.4;font-family:inherit}
-textarea{width:100%;padding:12px;border-radius:8px;border:1.5px solid #D1D5DB;font-size:13.5px;font-family:inherit;resize:vertical;outline:none;color:#1D2226;box-sizing:border-box;line-height:1.6}
-textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.15)}
-.ai-out{background:#F0F7FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px 16px;font-size:13.5px;color:#1D2226;line-height:1.75;white-space:pre-wrap;word-break:break-word;font-family:inherit}
-.out-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;margin-top:16px}
-.loading-box{display:flex;flex-direction:column;align-items:center;padding:32px 0;gap:16px}
-.spinner{width:40px;height:40px;border-radius:50%;border:3px solid #EEF3F8;border-top-color:#0A66C2;animation:spin .9s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-msg{color:#5E7287;font-size:13.5px;text-align:center;line-height:1.6}
-.err-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:14px 16px;margin-bottom:14px;color:#B91C1C;font-size:13.5px}
-.meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;padding:0 2px}
-.meta-text{font-size:12px;color:#5E7287;font-weight:600}
-.refresh-btn{background:transparent;border:1px solid #D1D5DB;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px;color:#5E7287;font-weight:600;font-family:inherit}
-.why-list{margin:0;padding-left:18px;color:#3D4A58;font-size:13.5px;line-height:2}
-.section{display:none}.section.active{display:block}
-/* API Key setup */
-.setup-banner{background:#FFF7ED;border:1px solid #FED7AA;border-radius:12px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.setup-banner p{font-size:13px;color:#7C2D12;flex:1;line-height:1.5;min-width:180px}
-.key-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.key-input{flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid #D1D5DB;font-size:13px;font-family:inherit;outline:none;min-width:160px}
-.key-input:focus{border-color:#0A66C2}
-.key-save-btn{background:#0A66C2;color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;font-family:inherit;white-space:nowrap}
-.key-ok{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:8px 12px;font-size:12px;color:#166534;display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.key-change{background:transparent;border:none;color:#166534;font-size:12px;text-decoration:underline;cursor:pointer;font-family:inherit}
-.howto{margin-top:16px;background:#F7F9FC;border-radius:8px;border:1px solid #E8ECF0;padding:14px 16px}
-.howto-title{font-size:12.5px;font-weight:700;color:#3D4A58;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
-.howto-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
-.howto-row:last-child{margin-bottom:0}
-.howto-icon{font-size:16px;flex-shrink:0}
-.howto-text{font-size:13px;color:#3D4A58;line-height:1.5}
-.trend-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.protip{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#7C2D12;line-height:1.6}
+/* WHY LIST */
+.wl{margin:0;padding-left:16px;color:#3D4A58;font-size:13px;line-height:2}
+/* TREND CARD */
+.tcard{background:#fff;border-radius:12px;border:1px solid #E0E4E9;border-left:3px solid #0A66C2;padding:18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.tnum{background:#0A66C2;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-right:7px}
+.ttitle{font-size:13.5px;font-weight:800;color:#1D2226}
+.tsummary{font-size:12.5px;color:#5E7287;line-height:1.5;margin-top:4px}
+.tlam{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:7px 11px;margin:10px 0;font-size:11.5px;color:#166534;line-height:1.5}
+/* LOADING */
+.ldbox{display:flex;flex-direction:column;align-items:center;padding:28px 0;gap:14px}
+.spin{width:36px;height:36px;border-radius:50%;border:3px solid #EEF3F8;border-top-color:#0A66C2;animation:sp .9s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ldmsg{color:#5E7287;font-size:13px;text-align:center;line-height:1.5}
+/* ERROR */
+.errbox{background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#B91C1C;line-height:1.5}
+.dbg{background:#FFF3CD;border:1px solid #FFEAA7;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:11px;color:#856404;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:120px;overflow-y:auto}
+/* AI */
+.ai-idea{display:block;width:100%;text-align:left;background:#F7F9FC;border:1px solid #E0E4E9;border-radius:8px;padding:7px 11px;margin-bottom:5px;cursor:pointer;font-size:12.5px;color:#3D4A58;line-height:1.4;font-family:inherit}
+.ai-idea:hover{background:#EEF3F8;border-color:#0A66C2}
+textarea{width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid #D1D5DB;font-size:13px;font-family:inherit;resize:vertical;outline:none;color:#1D2226;box-sizing:border-box;line-height:1.6}
+textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
+.bigbtn{width:100%;background:#0A66C2;color:#fff;border:none;padding:11px;border-radius:8px;cursor:pointer;font-size:13.5px;font-weight:700;transition:background .2s;margin-top:9px;font-family:inherit}
+.bigbtn:disabled{background:#94A3B8;cursor:not-allowed}
+.out-hdr{display:flex;justify-content:space-between;align-items:center;margin:14px 0 7px}
+.ai-out{background:#F0F7FF;border:1px solid #BFDBFE;border-radius:8px;padding:12px 14px;font-size:13px;color:#1D2226;line-height:1.75;white-space:pre-wrap;word-break:break-word;font-family:inherit}
+/* META ROW */
+.meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;padding:0 1px}
+.meta-txt{font-size:11.5px;color:#5E7287;font-weight:600}
+.rbtn{background:transparent;border:1px solid #D1D5DB;border-radius:6px;padding:3px 9px;cursor:pointer;font-size:11.5px;color:#5E7287;font-weight:600;font-family:inherit}
+/* KEY SETUP */
+.kbanner{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.kbanner strong{font-size:13px;color:#7C2D12;display:block;margin-bottom:6px}
+.kbanner p{font-size:12px;color:#7C2D12;line-height:1.6;margin-bottom:10px}
+.krow{display:flex;gap:7px}
+.kinput{flex:1;padding:7px 11px;border-radius:8px;border:1.5px solid #FED7AA;font-size:12.5px;font-family:inherit;outline:none;min-width:0;color:#1D2226}
+.kinput:focus{border-color:#0A66C2}
+.ksave{background:#0A66C2;color:#fff;border:none;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:700;font-family:inherit;white-space:nowrap}
+.kok{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:7px 11px;font-size:12px;color:#166534;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.kchg{background:transparent;border:none;color:#166534;font-size:12px;text-decoration:underline;cursor:pointer;font-family:inherit;margin-left:auto}
+/* HOWTO */
+.howto{margin-top:14px;background:#F7F9FC;border-radius:8px;border:1px solid #E8ECF0;padding:12px 14px}
+.htitle{font-size:11px;font-weight:700;color:#3D4A58;text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
+.hrow{display:flex;gap:9px;align-items:flex-start;margin-bottom:7px}
+.hrow:last-child{margin-bottom:0}
+.hrow span:first-child{font-size:15px;flex-shrink:0}
+.hrow span:last-child{font-size:12.5px;color:#3D4A58;line-height:1.5}
+/* TREND HEADER */
+.thdr{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sbtn{background:#0A66C2;color:#fff;border:none;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:700;white-space:nowrap;font-family:inherit;flex-shrink:0;transition:background .2s}
+.sbtn:disabled{background:#94A3B8;cursor:not-allowed}
 </style>
 </head>
 <body>
-
-<div class="header">
-  <div class="header-inner">
-    <div class="header-row">
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="hdr-row">
       <div class="in-box">in</div>
       <div>
         <h1>LinkedIn Optimizer</h1>
-        <p>Fabio Andrés Alomia · Mercadeo & Negocios Internacionales</p>
+        <p>Fabio Andrés Alomia · Mercadeo &amp; Negocios Internacionales</p>
       </div>
     </div>
     <div class="pills">
@@ -109,28 +127,33 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.15)}
 </div>
 
 <div class="wrap">
-  <div class="tabs-outer"><button class="tabs-arrow" onclick="scrollTabs(-1)">&#8249;</button><div class="tabs" id="tabs">
-    <button class="tab active" data-tab="headline">🏷️ Titular</button>
-    <button class="tab" data-tab="about">💼 Sobre mí</button>
-    <button class="tab" data-tab="tesa">🏢 Tesa Tape</button>
-    <button class="tab" data-tab="coopro">☕ CooproCafés</button>
-    <button class="tab" data-tab="skills">⚡ Habilidades</button>
-    <button class="tab" data-tab="tips">💡 Tips</button>
-    <button class="tab" data-tab="tendencias">📰 Tendencias</button>
-    <button class="tab" data-tab="ai">🤖 Refinar IA</button>
-  </div><button class="tabs-arrow" onclick="scrollTabs(1)">&#8250;</button></div>
+  <!-- TABS -->
+  <div class="tabs-outer">
+    <button class="tab-arr" onclick="scrollT(-1)">&#8249;</button>
+    <div class="tabs-scroll" id="tabscroll">
+      <button class="tab active" data-t="headline">🏷️ Titular</button>
+      <button class="tab" data-t="about">💼 Sobre mí</button>
+      <button class="tab" data-t="tesa">🏢 Tesa Tape</button>
+      <button class="tab" data-t="coopro">☕ CooproCafés</button>
+      <button class="tab" data-t="skills">⚡ Habilidades</button>
+      <button class="tab" data-t="tips">💡 Tips</button>
+      <button class="tab" data-t="tendencias">📰 Tendencias</button>
+      <button class="tab" data-t="ai">🤖 Refinar IA</button>
+    </div>
+    <button class="tab-arr" onclick="scrollT(1)">&#8250;</button>
+  </div>
 
   <!-- TITULAR -->
-  <div class="section active" id="sec-headline">
+  <div class="sec active" id="s-headline">
     <div class="card">
-      <div class="section-title">Titular (Headline)</div>
+      <div class="sec-title">Titular (Headline)</div>
       <div class="note">💡 Es lo primero que ven reclutadores. Máximo 220 caracteres. Incluye palabras clave que usan al buscar en LinkedIn.</div>
-      <div class="copy-row"><button class="copy-btn" onclick="copyText('txt-headline',this)">Copiar</button></div>
-      <pre class="content" id="txt-headline">Estudiante de Mercadeo & Negocios Internacionales | Intern Marketing Consumer LAM @ Tesa Tape | Trade Marketing · Digital · Consumer Goods | Abierto a nuevas oportunidades 🇨🇴</pre>
+      <div class="copy-row"><button class="cbtn" onclick="cp('tx-hl',this)">Copiar</button></div>
+      <pre class="box" id="tx-hl">Estudiante de Mercadeo &amp; Negocios Internacionales | Intern Marketing Consumer LAM @ Tesa Tape | Trade Marketing · Digital · Consumer Goods | Abierto a nuevas oportunidades 🇨🇴</pre>
     </div>
     <div class="card">
-      <h3 style="font-size:14px;font-weight:700;color:#1D2226;margin-bottom:12px">¿Por qué este titular funciona?</h3>
-      <ul class="why-list">
+      <h3 style="font-size:13.5px;font-weight:700;color:#1D2226;margin-bottom:10px">¿Por qué este titular funciona?</h3>
+      <ul class="wl">
         <li>Menciona Tesa Tape → credibilidad corporativa inmediata</li>
         <li>Keywords que buscan recruiters: 'Trade Marketing', 'Consumer LAM', 'Digital'</li>
         <li>'Abierto a nuevas oportunidades' → atrae reclutadores sin sonar desesperado</li>
@@ -140,12 +163,12 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.15)}
   </div>
 
   <!-- SOBRE MÍ -->
-  <div class="section" id="sec-about">
+  <div class="sec" id="s-about">
     <div class="card">
-      <div class="section-title">Sección Sobre mí (About)</div>
+      <div class="sec-title">Sección Sobre mí (About)</div>
       <div class="note">💡 Los primeros 3 renglones son los únicos visibles sin hacer clic en 'ver más'. Deben enganchar. Máx. 2.600 caracteres.</div>
-      <div class="copy-row"><button class="copy-btn" onclick="copyText('txt-about',this)">Copiar</button></div>
-      <pre class="content" id="txt-about">Soy estudiante de Mercadeo y Negocios Internacionales en la UAO, con experiencia real en marketing de consumo masivo, trade marketing y contenido digital en Colombia y Latinoamérica.
+      <div class="copy-row"><button class="cbtn" onclick="cp('tx-ab',this)">Copiar</button></div>
+      <pre class="box" id="tx-ab">Soy estudiante de Mercadeo y Negocios Internacionales en la UAO, con experiencia real en marketing de consumo masivo, trade marketing y contenido digital en Colombia y Latinoamérica.
 
 🎯 Actualmente me desempeño como Intern de Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf Group), donde apoyo la ejecución de estrategias para la región LAM, coordino materiales POP y colaboro con los equipos de ventas, trade marketing y marketing regional.
 
@@ -160,28 +183,28 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.15)}
   </div>
 
   <!-- TESA -->
-  <div class="section" id="sec-tesa">
+  <div class="sec" id="s-tesa">
     <div class="card">
-      <div class="section-title">Experiencia: Tesa Tape Colombia SAS</div>
-      <div class="note">💡 Empieza con contexto de la empresa. Usa bullets con emojis para facilitar el escaneo. Agrega métricas reales si las tienes.</div>
-      <div class="copy-row"><button class="copy-btn" onclick="copyText('txt-tesa',this)">Copiar</button></div>
-      <pre class="content" id="txt-tesa">Como Intern de Marketing Consumer LAM en Tesa Tape Colombia (división de Beiersdorf), apoyo la implementación de estrategias de marketing para el canal de consumo en la región Latinoamérica.
+      <div class="sec-title">Experiencia: Tesa Tape Colombia SAS</div>
+      <div class="note">💡 Empieza con contexto de la empresa. Usa bullets con emojis. Agrega métricas reales si las tienes.</div>
+      <div class="copy-row"><button class="cbtn" onclick="cp('tx-ts',this)">Copiar</button></div>
+      <pre class="box" id="tx-ts">Como Intern de Marketing Consumer LAM en Tesa Tape Colombia (división de Beiersdorf), apoyo la implementación de estrategias de marketing para el canal de consumo en la región Latinoamérica.
 
 🔹 Coordinación y seguimiento de envíos de material POP, muestras y dotación a asesores, KAMs, mercaderistas y personal de campo en múltiples países LAM.
 🔹 Colaboración transversal con equipos de ventas, trade marketing y marketing regional para asegurar la correcta ejecución de iniciativas y campañas.
 🔹 Apoyo en la planeación y ejecución logística de actividades en punto de venta, ferias, eventos corporativos y lanzamientos de nuevos productos.
 🔹 Gestión y seguimiento del presupuesto de Marketing, asegurando control y optimización de recursos.</pre>
     </div>
-    <div class="protip"><strong>🎯 Pro tip:</strong> Si puedes agregar métricas reales (ej: "coordiné envíos a 5+ países LAM"), agrégalas. Los números multiplican el impacto de cada bullet.</div>
+    <div class="protip">🎯 <strong>Pro tip:</strong> Si tienes métricas reales (ej: "coordiné envíos a 5+ países LAM") agrégalas. Los números multiplican el impacto.</div>
   </div>
 
   <!-- COOPRO -->
-  <div class="section" id="sec-coopro">
+  <div class="sec" id="s-coopro">
     <div class="card">
-      <div class="section-title">Experiencia: CooproCafés</div>
-      <div class="note">💡 Aunque fue una experiencia corta, muestra habilidades digitales concretas valiosas para cualquier agencia o startup.</div>
-      <div class="copy-row"><button class="copy-btn" onclick="copyText('txt-coopro',this)">Copiar</button></div>
-      <pre class="content" id="txt-coopro">Gestioné la presencia digital de CooproCafés, cooperativa cafetera del Valle del Cauca, fortaleciendo su comunidad online y visibilidad de marca.
+      <div class="sec-title">Experiencia: CooproCafés</div>
+      <div class="note">💡 Aunque fue corta, muestra habilidades digitales valiosas para cualquier agencia o startup.</div>
+      <div class="copy-row"><button class="cbtn" onclick="cp('tx-co',this)">Copiar</button></div>
+      <pre class="box" id="tx-co">Gestioné la presencia digital de CooproCafés, cooperativa cafetera del Valle del Cauca, fortaleciendo su comunidad online y visibilidad de marca.
 
 🔹 Creación y programación de contenido estratégico para redes sociales (Instagram, Facebook) y blog corporativo.
 🔹 Desarrollo de piezas multimedia que comunicaban la propuesta de valor de la cooperativa y sus productos.
@@ -190,279 +213,320 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.15)}
   </div>
 
   <!-- HABILIDADES -->
-  <div class="section" id="sec-skills">
+  <div class="sec" id="s-skills">
     <div class="card">
-      <div class="section-title">Habilidades a agregar</div>
-      <div class="note">💡 LinkedIn permite hasta 50 habilidades. Las 5 primeras son las más visibles. Pide validaciones a compañeros.</div>
-      <div class="skill-label" style="color:#0A66C2">⭐ Top 5</div>
-      <div style="margin-bottom:16px">
-        <span class="skill-tag skill-top">Marketing de Consumo</span><span class="skill-tag skill-top">Trade Marketing</span>
-        <span class="skill-tag skill-top">Marketing Digital</span><span class="skill-tag skill-top">Gestión de Redes Sociales</span>
-        <span class="skill-tag skill-top">Negocios Internacionales</span>
+      <div class="sec-title">Habilidades a agregar</div>
+      <div class="note">💡 Las 5 primeras son las más visibles. Pide validaciones (endorsements) a compañeros.</div>
+      <div class="slbl" style="color:#0A66C2">⭐ Top 5 — prioriza estas</div>
+      <div style="margin-bottom:14px">
+        <span class="stag s1">Marketing de Consumo</span><span class="stag s1">Trade Marketing</span>
+        <span class="stag s1">Marketing Digital</span><span class="stag s1">Gestión de Redes Sociales</span>
+        <span class="stag s1">Negocios Internacionales</span>
       </div>
-      <div class="skill-label" style="color:#5E7287">Adicionales</div>
-      <div style="margin-bottom:16px">
-        <span class="skill-tag skill-other">Creación de Contenido Digital</span><span class="skill-tag skill-other">Material POP / BTL</span>
-        <span class="skill-tag skill-other">Gestión de Presupuestos</span><span class="skill-tag skill-other">Microsoft Excel</span>
-        <span class="skill-tag skill-other">Canva</span><span class="skill-tag skill-other">Español (Nativo)</span>
-        <span class="skill-tag skill-other">Inglés (Intermedio)</span><span class="skill-tag skill-other">Trabajo en Equipo</span>
-        <span class="skill-tag skill-other">Orientación al Cliente</span><span class="skill-tag skill-other">Adaptabilidad</span>
+      <div class="slbl" style="color:#5E7287">Adicionales</div>
+      <div style="margin-bottom:14px">
+        <span class="stag s2">Creación de Contenido Digital</span><span class="stag s2">Material POP / BTL</span>
+        <span class="stag s2">Gestión de Presupuestos</span><span class="stag s2">Microsoft Excel</span>
+        <span class="stag s2">Canva</span><span class="stag s2">Español (Nativo)</span>
+        <span class="stag s2">Inglés (Intermedio)</span><span class="stag s2">Trabajo en Equipo</span>
+        <span class="stag s2">Orientación al Cliente</span><span class="stag s2">Adaptabilidad</span>
       </div>
-      <button class="copy-btn" onclick="copySkills(this)">Copiar todas</button>
+      <button class="cbtn" onclick="cpSkills(this)">Copiar todas</button>
     </div>
   </div>
 
   <!-- TIPS -->
-  <div class="section" id="sec-tips">
-    <div class="tip-card t1"><h3>📸 Foto de perfil profesional</h3><p>Fondo claro o neutro, encuadre desde hombros, ropa formal o smart casual. Perfiles con foto reciben 21× más visitas.</p></div>
-    <div class="tip-card t2"><h3>🖼️ Banner en Canva</h3><p>Diseña uno gratis en Canva (1584 × 396 px). Incluye tu nombre, carrera, UAO y algo visual de marketing.</p></div>
-    <div class="tip-card t3"><h3>🔗 URL personalizada</h3><p>Ve a 'Editar perfil público y URL' → cámbiala a: linkedin.com/in/fabioalomia</p></div>
-    <div class="tip-card t4"><h3>🏆 Sección Destacados (Featured)</h3><p>Agrega tu certificado Digital Marketing UAO y evidencia de Exposemillero 2025.</p></div>
-    <div class="tip-card t5"><h3>✍️ Publica contenido 1-2x por semana</h3><p>Abre la pestaña 📰 Tendencias cada lunes y tendrás 3 borradores listos para publicar.</p></div>
-    <div class="tip-card t6"><h3>🤝 Solicita recomendaciones</h3><p>Pide una recomendación escrita a tu supervisor en Tesa Tape y a alguien de CooproCafés.</p></div>
-    <div class="tip-card t7"><h3>🎓 Agrega el Semillero MMD</h3><p>Aparece en 'Organizaciones'. Demuestra compromiso más allá del aula.</p></div>
+  <div class="sec" id="s-tips">
+    <div class="tip t1"><h3>📸 Foto de perfil profesional</h3><p>Fondo claro o neutro, encuadre desde hombros, ropa smart casual. Perfiles con foto reciben 21× más visitas.</p></div>
+    <div class="tip t2"><h3>🖼️ Banner en Canva</h3><p>Diseña uno gratis (1584 × 396 px). Incluye tu nombre, carrera, UAO y algo visual de marketing.</p></div>
+    <div class="tip t3"><h3>🔗 URL personalizada</h3><p>Cámbiala a linkedin.com/in/fabioalomia — más profesional en CV y firma de email.</p></div>
+    <div class="tip t4"><h3>🏆 Sección Destacados (Featured)</h3><p>Agrega certificado Digital Marketing UAO y foto del Exposemillero 2025. Es lo primero que ve el reclutador.</p></div>
+    <div class="tip t5"><h3>✍️ Publica 1-2x por semana</h3><p>Abre la pestaña 📰 Tendencias cada lunes — 3 borradores listos para publicar en 30 segundos.</p></div>
+    <div class="tip t6"><h3>🤝 Solicita recomendaciones</h3><p>Pide una a tu supervisor en Tesa Tape y a alguien de CooproCafés. Muy valoradas por reclutadores.</p></div>
+    <div class="tip t7"><h3>🎓 Agrega Semillero MMD</h3><p>En 'Organizaciones'. Demuestra compromiso más allá del aula.</p></div>
   </div>
 
   <!-- TENDENCIAS -->
-  <div class="section" id="sec-tendencias">
-    <div id="key-setup-tend"></div>
+  <div class="sec" id="s-tendencias">
+    <div id="kb-tend"></div>
     <div class="card">
-      <div class="trend-header">
+      <div class="thdr">
         <div>
-          <div class="section-title" style="margin-bottom:4px">📰 Tendencias de la Semana</div>
-          <p style="font-size:13px;color:#5E7287;line-height:1.5">Genera borradores de posts de LinkedIn basados en tendencias actuales de marketing.</p>
+          <div class="sec-title" style="margin-bottom:3px">📰 Tendencias de la Semana</div>
+          <p style="font-size:12.5px;color:#5E7287;line-height:1.5">Genera borradores de posts de LinkedIn con tendencias actuales de marketing.</p>
         </div>
-        <button class="search-btn" id="btn-search" onclick="fetchTrends()">🔍 Buscar tendencias</button>
+        <button class="sbtn" id="btn-srch" onclick="fetchTrends()">🔍 Buscar</button>
       </div>
-      <div class="howto" id="howto-box">
-        <div class="howto-title">Cómo usar esto cada semana</div>
-        <div class="howto-row"><span class="howto-icon">📱</span><span class="howto-text">Pon una alarma los lunes a las 8am con el link de esta app</span></div>
-        <div class="howto-row"><span class="howto-icon">🔍</span><span class="howto-text">Haz clic en 'Buscar tendencias'</span></div>
-        <div class="howto-row"><span class="howto-icon">✏️</span><span class="howto-text">Elige el post que más conecte, agrega un detalle personal</span></div>
-        <div class="howto-row"><span class="howto-icon">🚀</span><span class="howto-text">Publica en LinkedIn</span></div>
+      <div class="howto" id="howto">
+        <div class="htitle">Cómo usarlo cada semana</div>
+        <div class="hrow"><span>📱</span><span>Alarma recurrente los lunes 8am con el link de esta app</span></div>
+        <div class="hrow"><span>🔍</span><span>Clic en Buscar tendencias</span></div>
+        <div class="hrow"><span>✏️</span><span>Elige el post, agrega un detalle personal</span></div>
+        <div class="hrow"><span>🚀</span><span>Publica en LinkedIn</span></div>
       </div>
     </div>
-    <div id="trend-loading" style="display:none"><div class="card"><div class="loading-box"><div class="spinner"></div><p class="loading-msg" id="load-msg">Generando tendencias…</p></div></div></div>
-    <div id="trend-error" style="display:none" class="err-box"></div>
-    <div id="trend-results"></div>
+    <div id="t-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="ldmsg">Generando tendencias…</p></div></div></div>
+    <div id="t-err" style="display:none" class="errbox"></div>
+    <div id="t-res"></div>
   </div>
 
   <!-- REFINAR IA -->
-  <div class="section" id="sec-ai">
-    <div id="key-setup-ai"></div>
+  <div class="sec" id="s-ai">
+    <div id="kb-ai"></div>
     <div class="card">
-      <div class="section-title">🤖 Refinar con IA</div>
-      <p style="color:#5E7287;font-size:13.5px;line-height:1.5;margin-bottom:16px">Pídele a la IA que personalice cualquier sección, genere ideas de posts o responda dudas sobre tu perfil.</p>
-      <p style="font-size:12px;font-weight:700;color:#5E7287;margin-bottom:6px">IDEAS:</p>
-      <button class="ai-idea" onclick="setAiQ(this)">Dame 5 ideas de posts para LinkedIn sobre mi experiencia en Tesa Tape</button>
-      <button class="ai-idea" onclick="setAiQ(this)">Reescribe mi sección Sobre mí enfocándome más en marketing digital</button>
-      <button class="ai-idea" onclick="setAiQ(this)">¿Cómo puedo destacar el Exposemillero 2025 en mi perfil?</button>
-      <button class="ai-idea" onclick="setAiQ(this)">Genera un mensaje para conectar con un reclutador de P&G Colombia</button>
-      <textarea id="ai-input" rows="4" placeholder="Escribe tu pregunta o lo que necesitas mejorar..."></textarea>
-      <button class="big-btn" id="btn-ai" onclick="callAI()">✨ Generar con IA</button>
-      <div id="ai-output-wrap" style="display:none">
-        <div class="out-row">
-          <span style="font-size:13px;font-weight:700;color:#0A66C2">Respuesta:</span>
-          <button class="copy-btn" onclick="copyEl('ai-out-text',this)">Copiar</button>
+      <div class="sec-title">🤖 Refinar con IA</div>
+      <p style="color:#5E7287;font-size:13px;line-height:1.5;margin-bottom:14px">Personaliza secciones, genera ideas de posts o crea mensajes para conectar con reclutadores.</p>
+      <p style="font-size:11px;font-weight:700;color:#5E7287;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em">Preguntas rápidas:</p>
+      <button class="ai-idea" onclick="setQ(this)">Dame 5 ideas de posts sobre mi experiencia en Tesa Tape</button>
+      <button class="ai-idea" onclick="setQ(this)">Reescribe mi sección Sobre mí enfocándome en marketing digital</button>
+      <button class="ai-idea" onclick="setQ(this)">¿Cómo destaco el Exposemillero 2025 en mi perfil?</button>
+      <button class="ai-idea" onclick="setQ(this)">Genera un mensaje para conectar con un reclutador de P&amp;G Colombia</button>
+      <button class="ai-idea" onclick="setQ(this)">¿Qué habilidades debo agregar para destacar en consumer goods?</button>
+      <textarea id="ai-in" rows="4" placeholder="Escribe tu pregunta o lo que necesitas mejorar..."></textarea>
+      <button class="bigbtn" id="btn-ai" onclick="runAI()">✨ Generar con IA</button>
+      <div id="ai-out-wrap" style="display:none">
+        <div class="out-hdr">
+          <span style="font-size:12.5px;font-weight:700;color:#0A66C2">Respuesta:</span>
+          <button class="cbtn" onclick="cpEl('ai-out',this)">Copiar</button>
         </div>
-        <pre class="ai-out" id="ai-out-text"></pre>
+        <pre class="ai-out" id="ai-out"></pre>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// ── TABS ──────────────────────────────────────────────
-document.getElementById('tabs').addEventListener('click',function(e){
-  if(!e.target.matches('.tab'))return;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  e.target.classList.add('active');
-  document.getElementById('sec-'+e.target.dataset.tab).classList.add('active');
-  renderKeyBanners();
+// ─── TABS ──────────────────────────────────────────────
+document.getElementById('tabscroll').addEventListener('click',function(e){
+  const t=e.target.closest('.tab');
+  if(!t)return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.sec').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('s-'+t.dataset.t).classList.add('active');
+  renderKeys();
+  // scroll active tab into view
+  t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 });
+function scrollT(d){
+  document.getElementById('tabscroll').scrollBy({left:d*150,behavior:'smooth'});
+}
 
-// ── COPY ──────────────────────────────────────────────
-function copyText(id,btn){
+// ─── COPY ──────────────────────────────────────────────
+function cp(id,btn){
   const el=document.getElementById(id);
-  navigator.clipboard.writeText(el.textContent).then(()=>{
+  // decode HTML entities for copy
+  const tmp=document.createElement('textarea');
+  tmp.innerHTML=el.innerHTML;
+  const text=el.innerText||el.textContent;
+  navigator.clipboard.writeText(text).then(()=>{
     btn.textContent='✓ Copiado';btn.classList.add('ok');
     setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok')},2200);
   });
 }
-function copyEl(id,btn){
-  const el=document.getElementById(id);
-  navigator.clipboard.writeText(el.textContent).then(()=>{
-    btn.textContent='✓ Copiado';btn.classList.add('ok');
-    setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok')},2200);
-  });
-}
-function copySkills(btn){
-  const skills='Marketing de Consumo, Trade Marketing, Marketing Digital, Gestión de Redes Sociales, Negocios Internacionales, Creación de Contenido Digital, Material POP / BTL, Gestión de Presupuestos, Microsoft Excel, Canva, Español (Nativo), Inglés (Intermedio), Trabajo en Equipo, Orientación al Cliente, Adaptabilidad';
-  navigator.clipboard.writeText(skills).then(()=>{
+function cpEl(id,btn){cp(id,btn);}
+function cpSkills(btn){
+  const txt='Marketing de Consumo, Trade Marketing, Marketing Digital, Gestión de Redes Sociales, Negocios Internacionales, Creación de Contenido Digital, Material POP / BTL, Gestión de Presupuestos, Microsoft Excel, Canva, Español (Nativo), Inglés (Intermedio), Trabajo en Equipo, Orientación al Cliente, Adaptabilidad';
+  navigator.clipboard.writeText(txt).then(()=>{
     btn.textContent='✓ Copiado';btn.classList.add('ok');
     setTimeout(()=>{btn.textContent='Copiar todas';btn.classList.remove('ok')},2200);
   });
 }
-function setAiQ(btn){document.getElementById('ai-input').value=btn.textContent.trim();}
+function setQ(btn){document.getElementById('ai-in').value=btn.textContent.trim();}
 
-// ── API KEY (localStorage) ─────────────────────────────
-function getKey(){return localStorage.getItem('groq_key')||'';}
-function saveKey(k){localStorage.setItem('groq_key',k.trim());}
+// ─── API KEY ───────────────────────────────────────────
+const gk=()=>localStorage.getItem('groq_k')||'';
+const sk=v=>localStorage.setItem('groq_k',v.trim());
 
-function renderKeyBanners(){
-  ['key-setup-tend','key-setup-ai'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(!el)return;
-    const k=getKey();
-    if(k){
-      el.innerHTML=`<div class="key-ok">🔑 API Key configurada <button class="key-change" onclick="clearKey()">Cambiar</button></div>`;
+function renderKeys(){
+  ['kb-tend','kb-ai'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    if(gk()){
+      el.innerHTML=`<div class="kok">🔑 API Key de Groq configurada <button class="kchg" onclick="rmKey()">Cambiar</button></div>`;
     } else {
-      el.innerHTML=`
-        <div class="setup-banner">
-          <div>
-            <strong style="font-size:13px;color:#7C2D12">🔑 Necesitas una API Key gratis de Groq</strong>
-            <p style="margin-top:4px">1. Ve a <strong>console.groq.com</strong> → Sign up con Google (gratis, sin tarjeta)<br>
-            2. Clic en <strong>API Keys → Create API Key</strong><br>
-            3. Pega tu key aquí abajo (empieza con <code>gsk_</code>)</p>
-            <div class="key-row">
-              <input class="key-input" id="key-input-${id}" placeholder="gsk_..." type="password"/>
-              <button class="key-save-btn" onclick="handleSaveKey('${id}')">Guardar</button>
-            </div>
-          </div>
-        </div>`;
+      el.innerHTML=`<div class="kbanner">
+        <strong>🔑 Configura tu API Key gratis de Groq</strong>
+        <p>1. Ve a <strong>console.groq.com</strong> → Sign up con Google (gratis, sin tarjeta)<br>
+        2. API Keys → Create API Key<br>
+        3. Pega tu key aquí (empieza con <code>gsk_</code>)</p>
+        <div class="krow">
+          <input class="kinput" id="ki-${id}" placeholder="gsk_..." type="password"/>
+          <button class="ksave" onclick="saveK('ki-${id}')">Guardar</button>
+        </div>
+      </div>`;
     }
   });
 }
-
-function handleSaveKey(fromId){
-  const input=document.getElementById('key-input-'+fromId);
-  const val=input?input.value.trim():'';
-  if(!val.startsWith('gsk_')){alert('La key debe empezar con gsk_');return;}
-  saveKey(val);
-  renderKeyBanners();
+function saveK(inputId){
+  const v=(document.getElementById(inputId)||{}).value||'';
+  if(!v.startsWith('gsk_')){alert('La key debe empezar con gsk_');return;}
+  sk(v);renderKeys();
 }
-function clearKey(){localStorage.removeItem('groq_key');renderKeyBanners();}
+function rmKey(){localStorage.removeItem('groq_k');renderKeys();}
+renderKeys();
 
-// Init banners
-renderKeyBanners();
-
-// ── GROQ API ───────────────────────────────────────────
-async function callGroq(systemPrompt, userPrompt){
-  const key=getKey();
+// ─── GROQ CALL ─────────────────────────────────────────
+async function groq(sys,usr,maxTok=1500){
+  const key=gk();
   if(!key)throw new Error('NO_KEY');
-  const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+  const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
     method:'POST',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
     body:JSON.stringify({
       model:'llama-3.3-70b-versatile',
-      max_tokens:1500,
-      messages:[
-        {role:'system',content:systemPrompt},
-        {role:'user',content:userPrompt}
-      ]
+      max_tokens:maxTok,
+      temperature:0.7,
+      messages:[{role:'system',content:sys},{role:'user',content:usr}]
     })
   });
-  const data=await res.json();
-  if(data.error)throw new Error(data.error.message||'Error de API');
-  return data.choices[0].message.content;
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message||'Error de Groq API');
+  return d.choices[0].message.content||'';
 }
 
-// ── LOADING MSGS ───────────────────────────────────────
-const LOAD_MSGS=['Analizando tendencias de marketing…','Adaptando al mercado LAM…','Preparando tus borradores…'];
-let loadInterval;
-function startLoad(){let i=0;document.getElementById('load-msg').textContent=LOAD_MSGS[0];loadInterval=setInterval(()=>{i=(i+1)%LOAD_MSGS.length;document.getElementById('load-msg').textContent=LOAD_MSGS[i];},3000);}
-function stopLoad(){clearInterval(loadInterval);}
+// ─── PARSE TRENDS (sin JSON, usa delimitadores) ────────
+function parseTrends(raw){
+  const trends=[];
+  // Split by ##TEND blocks
+  const blocks=raw.split(/##TEND\d+##/).map(b=>b.trim()).filter(Boolean);
+  for(const block of blocks){
+    const get=(key)=>{
+      const m=block.match(new RegExp(key+':::([\\s\\S]*?)(?=\\n[A-Z]+:::|##FIN|$)'));
+      return m?m[1].trim():'';
+    };
+    const titulo=get('TITULO');
+    const resumen=get('RESUMEN');
+    const relevancia=get('RELEVANCIA');
+    const post=get('POST');
+    if(titulo&&post) trends.push({titulo,resumen,relevancia,post});
+  }
+  return trends;
+}
 
-// ── TENDENCIAS ─────────────────────────────────────────
+// ─── LOADING MSGS ──────────────────────────────────────
+const MSGS=['Analizando tendencias de marketing…','Adaptando al mercado colombiano…','Preparando tus borradores de LinkedIn…'];
+let ldInt;
+function startLd(){let i=0;document.getElementById('ldmsg').textContent=MSGS[0];ldInt=setInterval(()=>{i=(i+1)%MSGS.length;document.getElementById('ldmsg').textContent=MSGS[i];},3000);}
+function stopLd(){clearInterval(ldInt);}
+
+// ─── TENDENCIAS ────────────────────────────────────────
 async function fetchTrends(){
-  if(!getKey()){alert('Primero guarda tu API Key de Groq arriba.');return;}
-  const btn=document.getElementById('btn-search');
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const btn=document.getElementById('btn-srch');
   btn.disabled=true;btn.textContent='Generando…';
-  document.getElementById('howto-box').style.display='none';
-  document.getElementById('trend-loading').style.display='block';
-  document.getElementById('trend-error').style.display='none';
-  document.getElementById('trend-results').innerHTML='';
-  startLoad();
+  document.getElementById('howto').style.display='none';
+  document.getElementById('t-load').style.display='block';
+  document.getElementById('t-err').style.display='none';
+  document.getElementById('t-res').innerHTML='';
+  startLd();
+
   const today=new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});
+
+  // Prompt uses delimiters — NO JSON, zero parsing errors
+  const sys=`Eres experto en marketing digital y consumer goods para Colombia y Latinoamérica. Responde siempre en español colombiano.`;
+  const usr=`Hoy es ${today}. Genera exactamente 3 tendencias actuales de marketing digital, consumer goods, TikTok marketing o trade marketing LAM.
+
+Para cada tendencia escribe un post de LinkedIn en primera persona desde la perspectiva de Fabio Andrés Alomia: estudiante de Mercadeo UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf). Tono profesional pero cercano. Post de 150-200 palabras con emojis y 4-5 hashtags al final.
+
+USA EXACTAMENTE este formato (no cambies los delimitadores):
+
+##TEND1##
+TITULO:::aquí el título corto
+RESUMEN:::aquí una sola oración explicando la tendencia
+RELEVANCIA:::aquí por qué importa en Colombia y LAM
+POST:::aquí el texto completo del post de LinkedIn
+##FIN1##
+
+##TEND2##
+TITULO:::aquí el título corto
+RESUMEN:::aquí una sola oración
+RELEVANCIA:::aquí por qué importa en LAM
+POST:::aquí el texto completo
+##FIN2##
+
+##TEND3##
+TITULO:::aquí el título corto
+RESUMEN:::aquí una sola oración
+RELEVANCIA:::aquí por qué importa en LAM
+POST:::aquí el texto completo
+##FIN3##`;
+
   try{
-    const sys=`Eres un experto en marketing digital y consumer goods para el mercado latinoamericano. Responde siempre en español colombiano. Devuelve únicamente JSON válido sin markdown.`;
-    const usr=`Hoy es ${today}. Genera 3 tendencias relevantes de marketing digital, consumer goods, TikTok marketing o trade marketing que estén ocurriendo actualmente.
-
-Para cada una, escribe un post de LinkedIn en primera persona desde la perspectiva de Fabio Andrés: estudiante de Mercadeo UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf). Tono profesional pero cercano.
-
-JSON exacto sin nada más:
-{"semana":"${today}","tendencias":[{"titulo":"nombre corto","resumen":"una oración","relevancia_lam":"por qué importa en Colombia/LAM","post_linkedin":"texto 150-200 palabras con emojis y 4-5 hashtags al final"}]}`;
-    const raw=await callGroq(sys,usr);
-    const cleaned=raw.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(cleaned);
-    renderTrends(parsed);
+    const raw=await groq(sys,usr,2000);
+    const trends=parseTrends(raw);
+    if(trends.length===0){
+      // Show debug info so we can fix if needed
+      showErr('No se pudieron extraer las tendencias del formato recibido.',raw.slice(0,400));
+    } else {
+      renderTrends(trends,today);
+    }
   }catch(e){
-    const errEl=document.getElementById('trend-error');
-    errEl.style.display='block';
-    errEl.textContent=e.message==='NO_KEY'?'⚠️ Primero guarda tu API Key de Groq.':'⚠️ '+e.message+'. Verifica tu API Key e intenta de nuevo.';
+    showErr(e.message==='NO_KEY'?'Guarda tu API Key de Groq primero.':e.message);
   }finally{
-    stopLoad();
-    document.getElementById('trend-loading').style.display='none';
-    btn.disabled=false;btn.textContent='🔍 Buscar tendencias';
+    stopLd();
+    document.getElementById('t-load').style.display='none';
+    btn.disabled=false;btn.textContent='🔍 Buscar';
   }
 }
 
-function renderTrends(parsed){
-  const wrap=document.getElementById('trend-results');
-  let html=`<div class="meta-row"><span class="meta-text">${parsed.semana} · ${(parsed.tendencias||[]).length} tendencias</span><button class="refresh-btn" onclick="fetchTrends()">↻ Actualizar</button></div>`;
-  (parsed.tendencias||[]).forEach((t,i)=>{
-    html+=`<div class="trend-card">
-      <div style="margin-bottom:10px">
-        <div style="display:flex;align-items:center;margin-bottom:4px"><span class="trend-num">#${i+1}</span><span class="trend-title">${t.titulo}</span></div>
-        <p class="trend-summary">${t.resumen}</p>
-      </div>
-      <div class="trend-lam"><strong>🌎 Por qué importa en LAM:</strong> ${t.relevancia_lam}</div>
-      <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span style="font-size:12px;font-weight:700;color:#5E7287;text-transform:uppercase;letter-spacing:.05em">Borrador LinkedIn</span>
-          <button class="copy-btn" onclick="copyFromPost(this,'${i}')">Copiar</button>
+function showErr(msg,dbg){
+  const el=document.getElementById('t-err');
+  el.style.display='block';
+  el.innerHTML='⚠️ '+msg+(dbg?`<div class="dbg">${dbg}</div>`:'');
+}
+
+function renderTrends(trends,today){
+  const wrap=document.getElementById('t-res');
+  let html=`<div class="meta"><span class="meta-txt">${today} · ${trends.length} tendencias</span><button class="rbtn" onclick="fetchTrends()">↻ Actualizar</button></div>`;
+  trends.forEach((t,i)=>{
+    const pid='tp-'+i;
+    html+=`<div class="tcard">
+      <div style="margin-bottom:9px">
+        <div style="display:flex;align-items:center;margin-bottom:3px">
+          <span class="tnum">#${i+1}</span><span class="ttitle">${esc(t.titulo)}</span>
         </div>
-        <pre class="content" id="post-${i}">${escHtml(t.post_linkedin)}</pre>
+        <p class="tsummary">${esc(t.resumen)}</p>
+      </div>
+      <div class="tlam"><strong>🌎 En LAM:</strong> ${esc(t.relevancia)}</div>
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+          <span style="font-size:11px;font-weight:700;color:#5E7287;text-transform:uppercase;letter-spacing:.05em">Borrador LinkedIn</span>
+          <button class="cbtn" onclick="cpPost('${pid}',this)">Copiar</button>
+        </div>
+        <pre class="box" id="${pid}">${esc(t.post)}</pre>
       </div>
     </div>`;
   });
   wrap.innerHTML=html;
 }
-function copyFromPost(btn,i){
-  const el=document.getElementById('post-'+i);
+function cpPost(id,btn){
+  const el=document.getElementById(id);
   navigator.clipboard.writeText(el.textContent).then(()=>{
     btn.textContent='✓ Copiado';btn.classList.add('ok');
     setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok')},2200);
   });
 }
-function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-// ── REFINAR IA ─────────────────────────────────────────
-async function callAI(){
-  if(!getKey()){alert('Primero guarda tu API Key de Groq arriba.');return;}
-  const input=document.getElementById('ai-input').value.trim();
-  if(!input)return;
+// ─── REFINAR IA ────────────────────────────────────────
+async function runAI(){
+  if(!gk()){alert('Guarda tu API Key de Groq primero.');return;}
+  const inp=document.getElementById('ai-in').value.trim();
+  if(!inp)return;
   const btn=document.getElementById('btn-ai');
   btn.disabled=true;btn.textContent='Generando…';
-  document.getElementById('ai-output-wrap').style.display='none';
+  document.getElementById('ai-out-wrap').style.display='none';
   try{
-    const sys=`Eres experto en optimización de perfiles de LinkedIn para el mercado latinoamericano. Perfil: Fabio Andrés Alomia, estudiante de Mercadeo y Negocios Internacionales UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf), abierto a nuevas oportunidades. Sectores: multinacionales, startups, agencias, consumer goods. Responde en español colombiano, tono profesional pero cercano. Si generas texto para LinkedIn, entrégalo listo para copiar y pegar.`;
-    const text=await callGroq(sys,input);
-    document.getElementById('ai-out-text').textContent=text;
-    document.getElementById('ai-output-wrap').style.display='block';
+    const sys=`Eres experto en LinkedIn y marca personal para el mercado latinoamericano. Perfil: Fabio Andrés Alomia Ruiz, estudiante de Mercadeo y Negocios Internacionales en la UAO, Intern Marketing Consumer LAM en Tesa Tape Colombia (Beiersdorf). Contrato extendido, abierto a nuevas oportunidades. Sectores: multinacionales, startups, agencias, consumer goods. Responde en español colombiano, tono profesional pero cercano. Si generas texto para LinkedIn, entrégalo listo para copiar y pegar.`;
+    const text=await groq(sys,inp,1200);
+    document.getElementById('ai-out').textContent=text;
+    document.getElementById('ai-out-wrap').style.display='block';
   }catch(e){
-    document.getElementById('ai-out-text').textContent=e.message==='NO_KEY'?'Primero guarda tu API Key de Groq.':'Error: '+e.message;
-    document.getElementById('ai-output-wrap').style.display='block';
+    document.getElementById('ai-out').textContent=e.message==='NO_KEY'?'Guarda tu API Key primero.':'⚠️ '+e.message;
+    document.getElementById('ai-out-wrap').style.display='block';
   }finally{
     btn.disabled=false;btn.textContent='✨ Generar con IA';
   }
-}
-
-// ── TAB SCROLL ARROWS ─────────────────────────────────
-function scrollTabs(dir){
-  const tabs=document.getElementById('tabs');
-  tabs.scrollBy({left:dir*160,behavior:'smooth'});
 }
 </script>
 </body>
