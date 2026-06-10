@@ -137,6 +137,15 @@ textarea:focus{border-color:#0A66C2;box-shadow:0 0 0 2px rgba(10,102,194,.12)}
 .src-col{background:#F0FDF4;color:#166534;border:1px solid #BBF7D0}
 .src-dig{background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE}
 .src-con{background:#FDF4FF;color:#7E22CE;border:1px solid #E9D5FF}
+/* MODE TOGGLE */
+.mode-toggle{display:flex;background:#F7F9FC;border:1px solid #E0E4E9;border-radius:10px;padding:3px;margin-bottom:14px;gap:3px}
+.mode-btn{flex:1;padding:7px;border-radius:8px;border:none;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;color:#5E7287;background:transparent;transition:all .15s}
+.mode-btn.active{background:#fff;color:#0A66C2;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.gk-setup{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.gk-setup strong{font-size:13px;color:#1D4ED8;display:block;margin-bottom:6px}
+.gk-setup p{font-size:12px;color:#1D4F8C;line-height:1.6;margin-bottom:10px}
+.gk-ok{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:7px 11px;font-size:12px;color:#166534;display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.gk-chg{background:transparent;border:none;color:#166534;font-size:12px;text-decoration:underline;cursor:pointer;font-family:inherit;margin-left:auto}
 </style>
 </head>
 <body>
@@ -313,21 +322,52 @@ Abierto a nuevas oportunidades. Conectemos.</pre>
 
     <!-- DISCOVER -->
     <div class="subsec active" id="sub-discover">
-      <div class="card">
-        <div class="sec-title" style="margin-bottom:4px">📡 Noticias reales — esta semana</div>
-        <p style="font-size:12.5px;color:#5E7287;margin-bottom:12px;line-height:1.5">Artículos publicados esta semana en las principales fuentes de marketing y consumer goods de LAM. Sin APIs de pago — 100% gratis.</p>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
-          <button class="feed-btn active" onclick="filterFeed('all',this)">Todos</button>
-          <button class="feed-btn" onclick="filterFeed('marketing',this)">Marketing</button>
-          <button class="feed-btn" onclick="filterFeed('consumer',this)">Consumer</button>
-          <button class="feed-btn" onclick="filterFeed('digital',this)">Digital</button>
-          <button class="feed-btn" onclick="filterFeed('colombia',this)">Colombia</button>
-        </div>
-        <button class="sbtn" id="btn-disc" onclick="loadFeeds()" style="width:100%;text-align:center">📰 Cargar noticias de esta semana</button>
+      <!-- Mode toggle -->
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="mode-google" onclick="switchMode('google')">🔍 Google Search</button>
+        <button class="mode-btn" id="mode-rss" onclick="switchMode('rss')">📡 RSS Feeds</button>
       </div>
-      <div id="disc-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="disc-msg">Conectando con fuentes…</p></div></div></div>
-      <div id="disc-err" style="display:none" class="errbox"></div>
-      <div id="disc-res"></div>
+
+      <!-- GOOGLE MODE -->
+      <div id="disc-google">
+        <div id="gk-setup-box"></div>
+        <div class="card" id="google-search-card" style="display:none">
+          <div class="sec-title" style="margin-bottom:4px">🔍 Buscar posts reales en LinkedIn</div>
+          <p style="font-size:12.5px;color:#5E7287;margin-bottom:12px;line-height:1.5">Busca dentro de los sitios que configuraste en tu motor de Google (linkedin.com/posts, linkedin.com/pulse y los que agregaste).</p>
+          <div class="search-row" style="margin-bottom:8px">
+            <input class="search-input" id="g-query" placeholder="Ej: trade marketing Colombia, consumer goods LAM..." value="marketing digital Colombia"/>
+            <button class="search-go" id="btn-gsearch" onclick="googleSearch()">Buscar</button>
+          </div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <button class="feed-btn" onclick="setGQ(this,'trade marketing Colombia 2026')">trade marketing</button>
+            <button class="feed-btn" onclick="setGQ(this,'consumer goods LAM estrategia')">consumer goods</button>
+            <button class="feed-btn" onclick="setGQ(this,'marketing digital Colombia tendencias')">marketing digital</button>
+            <button class="feed-btn" onclick="setGQ(this,'marca personal LinkedIn Colombia')">marca personal</button>
+          </div>
+        </div>
+        <div id="g-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="g-msg">Buscando en LinkedIn…</p></div></div></div>
+        <div id="g-err" style="display:none" class="errbox"></div>
+        <div id="g-res"></div>
+      </div>
+
+      <!-- RSS MODE -->
+      <div id="disc-rss" style="display:none">
+        <div class="card">
+          <div class="sec-title" style="margin-bottom:4px">📡 Noticias reales — esta semana</div>
+          <p style="font-size:12.5px;color:#5E7287;margin-bottom:12px;line-height:1.5">Artículos de las principales fuentes de marketing LAM. Sin APIs de pago.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+            <button class="feed-btn active" onclick="filterFeed('all',this)">Todos</button>
+            <button class="feed-btn" onclick="filterFeed('marketing',this)">Marketing</button>
+            <button class="feed-btn" onclick="filterFeed('consumer',this)">Consumer</button>
+            <button class="feed-btn" onclick="filterFeed('digital',this)">Digital</button>
+            <button class="feed-btn" onclick="filterFeed('colombia',this)">Colombia</button>
+          </div>
+          <button class="sbtn" id="btn-disc" onclick="loadFeeds()" style="width:100%;text-align:center">📰 Cargar noticias de esta semana</button>
+        </div>
+        <div id="disc-load" style="display:none"><div class="card"><div class="ldbox"><div class="spin"></div><p class="ldmsg" id="disc-msg">Conectando con fuentes…</p></div></div></div>
+        <div id="disc-err" style="display:none" class="errbox"></div>
+        <div id="disc-res"></div>
+      </div>
     </div>
 
     <!-- FOLLOW -->
@@ -423,7 +463,7 @@ document.getElementById('tabscroll').addEventListener('click',function(e){
   document.querySelectorAll('.sec').forEach(x=>x.classList.remove('active'));
   t.classList.add('active');
   document.getElementById('s-'+t.dataset.t).classList.add('active');
-  renderKeys();
+  renderAllKeys();
   t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 });
 function scrollT(d){document.getElementById('tabscroll').scrollBy({left:d*150,behavior:'smooth'});}
@@ -432,7 +472,7 @@ function switchSeg(id,btn){
   document.querySelectorAll('.subsec').forEach(x=>x.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('sub-'+id).classList.add('active');
-  renderKeys();
+  renderAllKeys();
 }
 
 // ─── COPY ──────────────────────────────────────────────
@@ -460,11 +500,15 @@ function setQ(btn){document.getElementById('ai-in').value=btn.textContent.trim()
 // ─── API KEYS ─────────────────────────────────────────
 const gk=()=>localStorage.getItem('groq_k')||'';
 const sk=v=>localStorage.setItem('groq_k',v.trim());
+const gGApiKey=()=>localStorage.getItem('g_api_key')||'';
+const sGApiKey=v=>localStorage.setItem('g_api_key',v.trim());
+const gGCx=()=>localStorage.getItem('g_cx')||'';
+const sGCx=v=>localStorage.setItem('g_cx',v.trim());
 
 const GROQ_IDS=['kb-tend','kb-ai','kb-comment','kb-repost'];
 const LI_IDS=['kb-li','kb-follow-ai'];
 
-function renderKeys(){
+function renderAllKeys(){
   // Groq keys
   GROQ_IDS.forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
@@ -483,14 +527,42 @@ function renderKeys(){
     if(gk()){el.innerHTML=`<div class="kok" style="margin-bottom:10px">🟢 Groq activo</div>`;}
     else {el.innerHTML='';}
   });
+  // Google Search keys
+  const gkBox=document.getElementById('gk-setup-box');
+  const gCard=document.getElementById('google-search-card');
+  if(gkBox){
+    if(gGApiKey()&&gGCx()){
+      gkBox.innerHTML=`<div class="gk-ok">🟢 Google Search configurado <button class="gk-chg" onclick="clearGoogleKeys()">Cambiar</button></div>`;
+      if(gCard)gCard.style.display='block';
+    } else {
+      if(gCard)gCard.style.display='none';
+      gkBox.innerHTML=`<div class="gk-setup">
+        <strong>🔑 Ingresa tus credenciales de Google</strong>
+        <p>Tienes los dos — solo pégalos aquí. Se guardan en tu navegador.</p>
+        <div class="krow" style="margin-bottom:6px"><input class="kinput" id="g-api-input" placeholder="API Key (AIza...)" type="password"/></div>
+        <div class="krow"><input class="kinput" id="g-cx-input" placeholder="Search Engine ID"/><button class="ksave" onclick="saveGoogleKeys()">Guardar</button></div>
+      </div>`;
+    }
+  }
+}
+function saveGoogleKeys(){
+  const k=(document.getElementById('g-api-input')||{}).value||'';
+  const cx=(document.getElementById('g-cx-input')||{}).value||'';
+  if(!k||!cx){alert('Ingresa los dos campos.');return;}
+  sGApiKey(k.trim());sGCx(cx.trim());renderAllKeys();
+}
+function clearGoogleKeys(){
+  localStorage.removeItem('g_api_key');
+  localStorage.removeItem('g_cx');
+  renderAllKeys();
 }
 function saveGroq(inputId){
   const v=(document.getElementById(inputId)||{}).value||'';
   if(!v.startsWith('gsk_')){alert('La key debe empezar con gsk_');return;}
-  sk(v);renderKeys();
+  sk(v);renderAllKeys();
 }
-function clearGroq(){localStorage.removeItem('groq_k');renderKeys();}
-renderKeys();
+function clearGroq(){localStorage.removeItem('groq_k');renderAllKeys();}
+renderAllKeys();
 
 // ─── GROQ ──────────────────────────────────────────────
 async function groq(sys,usr,maxTok=1400){
@@ -504,6 +576,82 @@ async function groq(sys,usr,maxTok=1400){
   const d=await r.json();
   if(d.error)throw new Error(d.error.message||'Error Groq API');
   return d.choices[0].message.content||'';
+}
+
+// ─── MODE SWITCH ──────────────────────────────────────
+let discoverMode='google';
+function switchMode(mode){
+  discoverMode=mode;
+  document.getElementById('mode-google').classList.toggle('active',mode==='google');
+  document.getElementById('mode-rss').classList.toggle('active',mode==='rss');
+  document.getElementById('disc-google').style.display=mode==='google'?'block':'none';
+  document.getElementById('disc-rss').style.display=mode==='rss'?'block':'none';
+  renderAllKeys();
+}
+
+// ─── GOOGLE SEARCH ─────────────────────────────────────
+function setGQ(btn,q){
+  document.getElementById('g-query').value=q;
+  document.querySelectorAll('#google-search-card .feed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function googleSearch(){
+  const apiKey=gGApiKey(),cx=gGCx();
+  if(!apiKey||!cx){alert('Guarda tus credenciales de Google primero.');return;}
+  const query=document.getElementById('g-query').value.trim();
+  if(!query)return;
+  const btn=document.getElementById('btn-gsearch');
+  btn.disabled=true;btn.textContent='Buscando…';
+  document.getElementById('g-load').style.display='block';
+  document.getElementById('g-err').style.display='none';
+  document.getElementById('g-res').innerHTML='';
+  startLd('g-msg',['Buscando en LinkedIn…','Filtrando resultados recientes…','Encontrando posts relevantes…']);
+  try{
+    const url=`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}&num=8&dateRestrict=w2&lr=lang_es&gl=co`;
+    const r=await fetch(url);
+    const d=await r.json();
+    if(d.error)throw new Error(d.error.message||'Error Google API ('+d.error.code+')');
+    const items=d.items||[];
+    if(items.length===0){
+      showErr('g-err','No se encontraron resultados. Intenta con otras palabras clave.');
+    } else {
+      renderGoogleResults(items,query);
+    }
+  }catch(e){showErr('g-err',e.message);}
+  finally{
+    stopLd();
+    document.getElementById('g-load').style.display='none';
+    btn.disabled=false;btn.textContent='Buscar';
+  }
+}
+
+function renderGoogleResults(items,query){
+  const w=document.getElementById('g-res');
+  let h=`<div class="meta"><span class="meta-txt">${items.length} resultados · últimas 2 semanas</span><button class="rbtn" onclick="googleSearch()">↻ Actualizar</button></div>`;
+  items.forEach(item=>{
+    const url=item.link||'';
+    const title=item.title||'';
+    const snippet=(item.snippet||'').replace(/\n/g,' ').trim();
+    const isLI=url.includes('linkedin');
+    const badge=isLI?'src-li':'src-web';
+    const source=isLI?'LinkedIn':(new URL(url).hostname.replace('www.','') );
+    const attr=esc(title+(snippet?' — '+snippet:'')).replace(/'/g,'&#39;');
+    h+=`<div class="news-card">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
+        <span class="src-badge ${badge}">${esc(source)}</span>
+      </div>
+      <div class="news-title">${esc(title)}</div>
+      <div class="news-snippet">${esc(snippet.slice(0,200))}${snippet.length>200?'…':''}</div>
+      <div class="news-actions" style="margin-top:10px">
+        <a class="rlink rlink-primary" href="${esc(url)}" target="_blank" rel="noopener">Abrir →</a>
+        <button class="rlink rlink-secondary" onclick="genFromArticle('post','${attr}')">Generar post</button>
+        <button class="rlink rlink-secondary" onclick="genFromArticle('comment','${attr}')">Comentar</button>
+        <button class="rlink rlink-secondary" onclick="genFromArticle('repost','${attr}')">Repostear</button>
+      </div>
+    </div>`;
+  });
+  w.innerHTML=h;
 }
 
 // ─── RSS FEEDS ────────────────────────────────────────
@@ -524,8 +672,11 @@ let activeFilter='all';
 
 async function fetchOneFeed(source){
   try{
-    const r=await fetch(RSS_PROXY+encodeURIComponent(source.url)+'&count=6',
-      {signal:AbortSignal.timeout(7000)});
+    const ctrl=new AbortController();
+    const tid=setTimeout(()=>ctrl.abort(),7000);
+    let r;
+    try{ r=await fetch(RSS_PROXY+encodeURIComponent(source.url)+'&count=6',{signal:ctrl.signal}); }
+    finally{ clearTimeout(tid); }
     const d=await r.json();
     if(d.status!=='ok')return[];
     return(d.items||[]).map(item=>({
