@@ -1045,6 +1045,14 @@ async function runAI(){
 }
 
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ── PAGE INIT ──────────────────────────────────────────
+(function(){
+  // Pre-load Google credentials if not already saved
+  if(!localStorage.getItem('g_api_key'))localStorage.setItem('g_api_key','AIzaSyC87BLIvfdpd6KJ44Tor_xdtqjTVEJPG-0');
+  if(!localStorage.getItem('g_cx'))localStorage.setItem('g_cx','72664c4fbe6e24b3f');
+  renderAllKeys();
+})();
 </script>
 </body>
 </html>
